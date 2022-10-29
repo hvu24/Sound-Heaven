@@ -52,7 +52,7 @@ Returns the information about the current user that is logged in.
 * Require Authentication: true
 * Request
   * Method: ? GET
-  * URL: ? /users/:username
+  * URL: ? /me
   * Body: none
 
 * Successful Response
@@ -272,7 +272,7 @@ Returns all the songs created by the current user.
 * Require Authentication: true
 * Request
   * Method: ? GET
-  * URL: ? /:username/songs
+  * URL: ? /me/songs
   * Body: none
 
 * Successful Response
@@ -565,7 +565,7 @@ Deletes an existing song.
 * Require proper authorization: Song must belong to the current user
 * Request
   * Method: ? DELETE
-  * URL: ? songs/:songId
+  * URL: ? /songs/:songId
   * Body: none
 
 * Successful Response
@@ -700,7 +700,7 @@ Add a song to a playlist specified by the playlist's id.
 * Require proper authorization: Playlist must belong to the current user
 * Request
   * Method: ? POST
-  * URL: ? /artists/:artistId/playlists/:playlistId/songs
+  * URL: ? /playlists/:playlistId/songs
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -758,7 +758,7 @@ Returns the details of a playlist specified by its id.
 * Require Authentication: false
 * Request
   * Method: ? GET
-  * URL: ? /artists/:artistId/playlists/:playlistId
+  * URL: ? /playlists/:playlistId
   * Body: none
 
 * Successful Response
@@ -812,7 +812,7 @@ Updates and returns an existing playlist.
 * Require proper authorization: Playlist must belong to the current user
 * Request
   * Method: ? PUT
-  * URL: ? /artists/:artistId/playlists/:playlistId
+  * URL: ? /playlists/:playlistId
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -878,7 +878,7 @@ Deletes an existing playlist.
 * Require proper authorization: Playlist must belong to the current user
 * Request
   * Method: ? DELETE
-  * URL: ? /artists/:artistId/playlists/:playlistId
+  * URL: ? /playlists/:playlistId
   * Body: none
 
 * Successful Response
@@ -914,7 +914,7 @@ Returns all the playlists created by the current user.
 * Require Authentication: true
 * Request
   * Method: ? GET
-  * URL: ? /:username/playlists
+  * URL: ? /me/playlists
   * Body: none
 
 * Successful Response
@@ -947,7 +947,7 @@ Returns all the comments that belong to a song specified by id.
 * Require Authentication: false
 * Request
   * Method: ? GET
-  * URL: ? /artists/:artistId/songs/:songId/comments
+  * URL: ? /songs/:songId/comments
   * Body: none
 
 * Successful Response
@@ -995,7 +995,7 @@ Create and return a new comment for a song specified by id.
 * Require Authentication: true
 * Request
   * Method: ? POST
-  * URL: ? /artists/:artistId/songs/:songId/comments
+  * URL: ? /songs/:songId/comments
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1060,7 +1060,7 @@ Update and return an existing comment.
 * Require proper authorization: Comment must belong to the current user
 * Request
   * Method: ? PUT
-  * URL: ? /artists/:artistId/songs/:songId/comments/:commentId
+  * URL: ? /comments/:commentId
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -1125,7 +1125,7 @@ Delete an existing comment.
 * Require proper authorization: Comment must belong to the current user
 * Request
   * Method: ? DELETE
-  * URL: ? /artists/:artistId/songs/:songId/comments/:commentId
+  * URL: ? /comments/:commentId
   * Body: none
 
 * Successful Response
@@ -1195,7 +1195,7 @@ Returns all the Albums created by the current user.
 * Require Authentication: true
 * Request
   * Method: ? GET
-  * URL: ? /:username/albums
+  * URL: ? /me/albums
   * Body: none
 
 * Successful Response
@@ -1386,7 +1386,7 @@ Updates and returns an existing album.
 * Require proper authorization: Album must belong to the current user
 * Request
   * Method: ? PUT
-  * URL: ? /albums/:album:id
+  * URL: ? /albums/:albumId
   * Headers:
     * Content-Type: application/json
   * Body:
