@@ -2,7 +2,7 @@
 
 ## Database Schema Design
 
-`<insert database schema design here>`
+![Getting Started](./SoundCloud%20Clone%20Schema.png)
 
 ## API Documentation
 
