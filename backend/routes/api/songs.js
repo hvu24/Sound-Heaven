@@ -1,0 +1,21 @@
+const express = require('express')
+
+const { Song } = require('../../db/models');
+
+
+
+const router = express.Router();
+
+
+router.get('/', async (req, res) => {
+
+    const songs = await Song.findAll();
+
+    if (!songs) throw new Error('No songs found');
+
+    return res.json(songs);
+});
+
+
+
+module.exports = router;
