@@ -31,4 +31,19 @@ router.get('/current', requireAuth, async (req, res) => {
 }
 );
 
+router.delete('/:songId', async (req, res, next) => {
+    const { songId } = req.params;
+    const song = await Song.destroy({ where: { id: songId } });
+
+    if (!song) {
+        const err = new Error('Song not found.');
+        err.status = 404;
+        err.title = 'Song not found.';
+        err.errors = ['Song not found.'];
+        return next(err)
+    }
+
+    return res.json({ message: 'Successfully deleted' });
+});
+
 module.exports = router;
