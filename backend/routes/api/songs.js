@@ -31,19 +31,30 @@ router.get('/current', requireAuth, async (req, res) => {
 }
 );
 
-router.delete('/:songId', async (req, res, next) => {
+router.delete('/:songId', requireAuth, async (req, res, next) => {
     const { songId } = req.params;
-    const song = await Song.destroy({ where: { id: songId } });
+    const { user } = req;
 
-    if (!song) {
+    const song = await Song.findOne({ where: { id: songId } })
+
+    if (song) {
+        if (song.artistId !== user.id) {
+            const err = new Error('User not authorized to delete song.');
+            err.status = 403;
+            err.title = 'User not authorized to delete song.';
+            err.errors = ['User not authorized to delete song.'];
+            return next(err)
+        } else {
+            await Song.destroy({ where: { id: songId } });
+            return res.json({ message: 'Successfully deleted' });
+        }
+    } else {
         const err = new Error('Song not found.');
         err.status = 404;
         err.title = 'Song not found.';
         err.errors = ['Song not found.'];
         return next(err)
     }
-
-    return res.json({ message: 'Successfully deleted' });
 });
 
 module.exports = router;
