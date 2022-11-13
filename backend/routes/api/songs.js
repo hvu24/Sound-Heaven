@@ -1,5 +1,5 @@
 const express = require('express')
-
+const { requireAuth } = require('../../utils/auth');
 const { Song } = require('../../db/models');
 
 
@@ -16,7 +16,7 @@ router.get('/', async (req, res) => {
     return res.json(songs);
 });
 
-router.get('/current', async (req, res) => {
+router.get('/current', requireAuth, async (req, res) => {
     const { user } = req;
 
     const songs = await Song.findAll({
