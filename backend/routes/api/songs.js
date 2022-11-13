@@ -11,10 +11,11 @@ router.get('/', async (req, res) => {
 
     const songs = await Song.findAll();
 
-    if (!songs) throw new NotFoundError('No songs found');
+    if (!songs) throw new Error('No songs found');
 
     return res.json(songs);
 });
+
 
 
 module.exports = router;
