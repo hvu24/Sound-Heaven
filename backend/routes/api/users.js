@@ -2,7 +2,7 @@
 const express = require('express')
 
 const { setTokenCookie, requireAuth } = require('../../utils/auth');
-const { User } = require('../../db/models');
+const { User, Artist, Song } = require('../../db/models');
 
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -56,4 +56,20 @@ router.post(
     }
 );
 
+router.get('/:userId/songs', async (req, res, next) => {
+    const { userId } = req.params;
+
+    const artist = await Artist.findOne({ where: { id: userId } })
+
+    if (artist) {
+        const songs = await Song.findAll({ where: { artistId: userId } })
+        return res.json(songs)
+    } else {
+        const err = new Error('Artist not found.');
+        err.status = 404;
+        err.title = 'Artist not found.';
+        err.errors = ['Artist not found.'];
+        return next(err)
+    }
+});
 module.exports = router;
