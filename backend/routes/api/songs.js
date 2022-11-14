@@ -1,6 +1,6 @@
 const express = require('express')
 const { requireAuth } = require('../../utils/auth');
-const { Song } = require('../../db/models');
+const { Song, Artist, Album, Comment, Playlist, User } = require('../../db/models');
 
 
 
@@ -14,6 +14,48 @@ router.get('/', async (req, res) => {
     if (!songs) throw new Error('No songs found');
 
     return res.json(songs);
+});
+
+router.get('/:songId', async (req, res, next) => {
+    const { songId } = req.params;
+
+    const song = await Song.findOne({
+        where: {
+            id: songId
+        },
+        include: [{
+            model: Artist,
+            attributes: ['id', 'imageUrl',],
+            // include: {
+            //     model: User,
+            //     attributes: ['username']
+            // }
+        },
+        {
+            model: Album,
+            attributes: ['id', 'title', 'imageUrl',],
+        }],
+
+    })
+
+    if (song) {
+        const user = await User.findByPk(song.artistId)
+
+        const songData = JSON.stringify(song) //stringified and parsed song data because I couldn't add new keys into the song object otherwise
+        const songDataParsed = JSON.parse(songData) //ex. 'song.Artist.username = user.username' doesn't work at all
+        songDataParsed.Artist.username = user.username //using an include also didn't work as it also includes the model name so the format doesn't match specifications
+
+        // song.Artist.username = user.username
+
+        return res.json(songDataParsed)
+        // return res.json(song)
+    } else {
+        const err = new Error("Song couldn't be found.");
+        err.status = 404;
+        err.title = "Song couldn't be found.";
+        err.errors = ["Song couldn't be found."];
+        return next(err)
+    }
 });
 
 router.get('/current', requireAuth, async (req, res) => {
