@@ -6,7 +6,7 @@ const { Song, Artist, Album, Comment, Playlist, User } = require('../../db/model
 
 const router = express.Router();
 
-
+//get all songs
 router.get('/', async (req, res) => {
 
     const songs = await Song.findAll();
@@ -15,7 +15,7 @@ router.get('/', async (req, res) => {
 
     return res.json(songs);
 });
-
+//get details of song by song id
 router.get('/:songId', async (req, res, next) => {
     const { songId } = req.params;
 
@@ -57,7 +57,7 @@ router.get('/:songId', async (req, res, next) => {
         return next(err)
     }
 });
-
+//get all songs by current user
 router.get('/current', requireAuth, async (req, res) => {
     const { user } = req;
 
@@ -72,7 +72,7 @@ router.get('/current', requireAuth, async (req, res) => {
     return res.json(songs);
 }
 );
-
+//delete song by current user
 router.delete('/:songId', requireAuth, async (req, res, next) => {
     const { songId } = req.params;
     const { user } = req;

@@ -55,7 +55,7 @@ router.post(
         );
     }
 );
-
+//get all songs by artist from id
 router.get('/:userId/songs', async (req, res, next) => {
     const { userId } = req.params;
 

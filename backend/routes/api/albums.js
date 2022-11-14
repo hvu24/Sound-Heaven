@@ -6,6 +6,7 @@ const { Song, Artist, Album, Comment, Playlist, User } = require('../../db/model
 
 const router = express.Router();
 
+//get all albums
 router.get('/', async (req, res) => {
 
     const albums = await Album.findAll();
@@ -15,5 +16,20 @@ router.get('/', async (req, res) => {
     return res.json(albums);
 });
 
+//get all albums created by current user
+router.get('/current', requireAuth, async (req, res) => {
+    const { user } = req;
+
+    const albums = await Album.findAll({
+        where: {
+            artistId: user.id
+        }
+    })
+
+    if (albums.length === 0) throw new Error('No albums found');
+
+    return res.json(albums);
+}
+);
 
 module.exports = router;
