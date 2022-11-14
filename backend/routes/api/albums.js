@@ -13,7 +13,7 @@ router.get('/', async (req, res) => {
 
     if (!albums) throw new Error('No albums found');
 
-    return res.json(albums);
+    return res.json({ albums });
 });
 
 //get all albums created by current user
@@ -28,7 +28,7 @@ router.get('/current', requireAuth, async (req, res) => {
 
     if (albums.length === 0) throw new Error('No albums found');
 
-    return res.json(albums);
+    return res.json({ albums });
 }
 );
 

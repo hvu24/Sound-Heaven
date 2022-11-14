@@ -67,7 +67,7 @@ router.get('/current', requireAuth, async (req, res) => {
 
     if (playlists.length === 0) throw new Error('No songs found');
 
-    return res.json({playlists});
+    return res.json({ playlists });
 }
 );
 

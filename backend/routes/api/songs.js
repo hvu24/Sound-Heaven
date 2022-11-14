@@ -13,8 +13,24 @@ router.get('/', async (req, res) => {
 
     if (!songs) throw new Error('No songs found');
 
-    return res.json(songs);
+    return res.json({ songs });
 });
+
+//get all songs by current user
+router.get('/current', requireAuth, async (req, res) => {
+    const { user } = req;
+
+    const songs = await Song.findAll({
+        where: {
+            artistId: user.id
+        }
+    })
+
+    if (songs.length === 0) throw new Error('No songs found');
+
+    return res.json({ songs });
+}
+);
 //get details of song by song id
 router.get('/:songId', async (req, res, next) => {
     const { songId } = req.params;
@@ -57,21 +73,7 @@ router.get('/:songId', async (req, res, next) => {
         return next(err)
     }
 });
-//get all songs by current user
-router.get('/current', requireAuth, async (req, res) => {
-    const { user } = req;
 
-    const songs = await Song.findAll({
-        where: {
-            artistId: user.id
-        }
-    })
-
-    if (songs.length === 0) throw new Error('No songs found');
-
-    return res.json(songs);
-}
-);
 //delete song by current user
 router.delete('/:songId', requireAuth, async (req, res, next) => {
     const { songId } = req.params;
@@ -115,7 +117,7 @@ router.get('/:songId/comments', async (req, res, next) => {
     const song = await Song.findByPk(songId)
     if (song) {
         if (comments.length !== 0) {
-            return res.json(comments)
+            return res.json({ comments })
         } else {
             const err = new Error("No comments found.");
             err.status = 404;
