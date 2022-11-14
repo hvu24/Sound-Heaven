@@ -99,4 +99,36 @@ router.delete('/:songId', requireAuth, async (req, res, next) => {
     }
 });
 
+//get comments of song by song id
+router.get('/:songId/comments', async (req, res, next) => {
+    const { songId } = req.params;
+
+    const comments = await Comment.findAll({
+        where: {
+            songId: songId
+        },
+        include: [{
+            model: User,
+            attributes: ['id', 'username',],
+        }],
+    })
+    const song = await Song.findByPk(songId)
+    if (song) {
+        if (comments.length !== 0) {
+            return res.json(comments)
+        } else {
+            const err = new Error("No comments found.");
+            err.status = 404;
+            err.title = "No comments found.";
+            err.errors = ["No comments found."];
+            return next(err)
+        }
+    } else {
+        const err = new Error("Song couldn't be found.");
+        err.status = 404;
+        err.title = "Song couldn't be found.";
+        err.errors = ["Song couldn't be found."];
+        return next(err)
+    }
+});
 module.exports = router;
