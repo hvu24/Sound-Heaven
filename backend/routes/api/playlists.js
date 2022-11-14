@@ -55,4 +55,20 @@ router.delete('/:playlistId', requireAuth, async (req, res, next) => {
     }
 });
 
+//get all playlists by current user
+router.get('/current', requireAuth, async (req, res) => {
+    const { user } = req;
+
+    const playlists = await Playlist.findAll({
+        where: {
+            userId: user.id
+        }
+    })
+
+    if (playlists.length === 0) throw new Error('No songs found');
+
+    return res.json({playlists});
+}
+);
+
 module.exports = router;
