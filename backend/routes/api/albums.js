@@ -68,4 +68,30 @@ router.get('/:albumId', async (req, res, next) => {
     }
 });
 
+//delete album by current user
+router.delete('/:albumId', requireAuth, async (req, res, next) => {
+    const { albumId } = req.params;
+    const { user } = req;
+
+    const album = await Album.findOne({ where: { id: albumId } })
+
+    if (album) {
+        if (album.artistId !== user.id) {
+            const err = new Error('User not authorized to delete album.');
+            err.status = 403;
+            err.title = 'User not authorized to delete album.';
+            err.errors = ['User not authorized to delete album.'];
+            return next(err)
+        } else {
+            await Album.destroy({ where: { id: albumId } });
+            return res.json({ message: 'Successfully deleted' });
+        }
+    } else {
+        const err = new Error("Album couldn't be found.");
+        err.status = 404;
+        err.title = "Album couldn't be found.";
+        err.errors = ["Album couldn't be found."];
+        return next(err)
+    }
+});
 module.exports = router;
