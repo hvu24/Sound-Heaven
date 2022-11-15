@@ -1,8 +1,32 @@
 const express = require('express')
 const { requireAuth } = require('../../utils/auth');
 const { Song, Artist, Album, Comment, Playlist, User, SongPlaylist } = require('../../db/models');
+const { handleValidationErrors } = require('../../utils/validation');
+const { check } = require('express-validator');
 
 const router = express.Router();
+
+const validatePlaylist = [
+    check('name')
+        .exists({ checkFalsy: true })
+        .withMessage('Playlist name is required.'),
+    handleValidationErrors
+];
+
+//create playlist
+router.post('/', requireAuth, validatePlaylist, async (req, res, next) => {
+    const { name, imageUrl } = req.body
+    const { user } = req;
+
+    const newPlaylist = await Playlist.create({
+        userId: user.id,
+        name,
+        imageUrl
+    })
+
+    res.status(201)
+    return res.json(newPlaylist)
+})
 
 //delete playlist by current user
 router.delete('/:playlistId', requireAuth, async (req, res, next) => {
