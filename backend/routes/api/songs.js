@@ -13,6 +13,64 @@ const validateComment = [
     handleValidationErrors
 ];
 
+const validateSong = [
+    check('title')
+        .exists({ checkFalsy: true })
+        .withMessage('Song title is required.'),
+    check('url')
+        .exists({ checkFalsy: true })
+        .withMessage('Audio is required.'),
+    handleValidationErrors
+];
+
+//create song
+router.post('/', requireAuth, validateSong, async (req, res, next) => {
+    const { title, description, url, imageUrl, albumId } = req.body
+    const { user } = req;
+
+    if(albumId === null){
+        const song = await Song.create({
+            artistId: user.id,
+            title,
+            description,
+            url,
+            imageUrl,
+            albumId
+        })
+
+        return res.json(song)
+    } else {
+        const album = await Album.findByPk(albumId)
+        if (album) {
+            if (album.artistId !== user.id) {
+                const err = new Error('User not authorized to edit album.');
+                err.status = 403;
+                err.title = 'User not authorized to edit album.';
+                err.errors = ['User not authorized to edit album.'];
+                return next(err)
+            } else {
+                const song = await Song.create({
+                    artistId: user.id,
+                    title,
+                    description,
+                    url,
+                    imageUrl,
+                    albumId
+                })
+
+                return res.json(song)
+            }
+        } else {
+            const err = new Error("Album couldn't be found.");
+            err.status = 404;
+            err.title = "Album couldn't be found.";
+            err.errors = ["Album couldn't be found."];
+            return next(err)
+        }
+    }
+
+})
+
 //create comment
 router.post('/:songId/comments', requireAuth, validateComment, async (req, res, next) => {
     const { body } = req.body
