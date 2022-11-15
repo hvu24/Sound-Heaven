@@ -23,12 +23,51 @@ const validateSong = [
     handleValidationErrors
 ];
 
+//edit song
+router.put('/:songId', requireAuth, validateSong, async (req, res, next) => {
+    const { title, description, url, imageUrl, albumId } = req.body
+    const { user } = req;
+    const { songId } = req.params
+
+    const song = await Song.findOne({
+        where: {
+            id: songId
+        }
+    })
+
+    if (song) {
+        if (song.artistId !== user.id) {
+            const err = new Error('User not authorized to edit song.');
+            err.status = 403;
+            err.title = 'User not authorized to edit song.';
+            err.errors = ['User not authorized to edit song.'];
+            return next(err)
+        } else {
+            song.set({
+                artistId: user.id,
+                title,
+                description,
+                url,
+                imageUrl,
+                albumId: albumId || null
+            })
+            return res.json(song)
+        }
+    } else {
+        const err = new Error("Song couldn't be found.");
+        err.status = 404;
+        err.title = "Song couldn't be found.";
+        err.errors = ["Song couldn't be found."];
+        return next(err)
+    }
+})
+
 //create song
 router.post('/', requireAuth, validateSong, async (req, res, next) => {
     const { title, description, url, imageUrl, albumId } = req.body
     const { user } = req;
 
-    if(albumId === null){
+    if (albumId === null) {
         const song = await Song.create({
             artistId: user.id,
             title,
@@ -37,7 +76,7 @@ router.post('/', requireAuth, validateSong, async (req, res, next) => {
             imageUrl,
             albumId
         })
-
+        res.status(201)
         return res.json(song)
     } else {
         const album = await Album.findByPk(albumId)
@@ -57,7 +96,7 @@ router.post('/', requireAuth, validateSong, async (req, res, next) => {
                     imageUrl,
                     albumId
                 })
-
+                res.status(201)
                 return res.json(song)
             }
         } else {
