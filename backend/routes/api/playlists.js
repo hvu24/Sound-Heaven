@@ -1,32 +1,8 @@
 const express = require('express')
 const { requireAuth } = require('../../utils/auth');
-const { Song, Artist, Album, Comment, Playlist, User } = require('../../db/models');
+const { Song, Artist, Album, Comment, Playlist, User, SongPlaylist } = require('../../db/models');
 
 const router = express.Router();
-
-// //get details of a playlist by id
-// router.get('/:playlistId', async (req, res, next) => {
-//     const { playlistId } = req.params;
-
-//     const playlist = await Playlist.findOne({
-//         where: {
-//             id: playlistId
-//         },
-//         include: {
-//             model: Song,
-//         }
-//     })
-
-//     if (playlist) {
-//         return res.json(playlist)
-//     } else {
-//         const err = new Error("Playlist couldn't be found.");
-//         err.status = 404;
-//         err.title = "Playlist couldn't be found.";
-//         err.errors = ["Playlist couldn't be found."];
-//         return next(err)
-//     }
-// });
 
 //delete playlist by current user
 router.delete('/:playlistId', requireAuth, async (req, res, next) => {
@@ -71,4 +47,30 @@ router.get('/current', requireAuth, async (req, res) => {
 }
 );
 
+//get details of a playlist by id
+router.get('/:playlistId', async (req, res, next) => {
+    const { playlistId } = req.params;
+
+    const playlist = await Playlist.findOne({
+        where: {
+            id: playlistId
+        },
+        include: {
+            model: Song,
+            through: { //through with empty attributes array excludes the SongPlaylist object
+                attributes: [] //add attributes to array to include properties from SongPlaylist object
+            },
+        }
+    })
+
+    if (playlist) {
+        return res.json(playlist)
+    } else {
+        const err = new Error("Playlist couldn't be found.");
+        err.status = 404;
+        err.title = "Playlist couldn't be found.";
+        err.errors = ["Playlist couldn't be found."];
+        return next(err)
+    }
+});
 module.exports = router;
