@@ -29,6 +29,42 @@ router.post('/', requireAuth, validateAlbum, async (req, res, next) => {
     return res.json(newAlbum)
 })
 
+//edit an album
+router.put('/:albumId', requireAuth, validateAlbum, async (req, res, next) => {
+    const { title, description, imageUrl } = req.body
+    const { albumId } = req.params
+    const { user } = req;
+
+    const album = await Album.findOne({
+        where: {
+            id: albumId
+        }
+    })
+
+    if (album) {
+        if (album.artistId !== user.id) {
+            const err = new Error('User not authorized to edit album.');
+            err.status = 403;
+            err.title = 'User not authorized to edit album.';
+            err.errors = ['User not authorized to edit album.'];
+            return next(err)
+        } else {
+            album.set({
+                title,
+                description,
+                imageUrl
+            })
+            return res.json(album)
+        }
+    } else {
+        const err = new Error("Album couldn't be found.");
+        err.status = 404;
+        err.title = "Album couldn't be found.";
+        err.errors = ["Album couldn't be found."];
+        return next(err)
+    }
+})
+
 //get all albums
 router.get('/', async (req, res) => {
 
