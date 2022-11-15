@@ -28,6 +28,41 @@ router.post('/', requireAuth, validatePlaylist, async (req, res, next) => {
     return res.json(newPlaylist)
 })
 
+//edit playlist
+router.put('/:playlistId', requireAuth, validatePlaylist, async (req, res, next) => {
+    const { name, imageUrl } = req.body
+    const { playlistId } = req.params
+    const { user } = req;
+
+    const playlist = await Playlist.findOne({
+        where: {
+            id: playlistId
+        }
+    })
+
+    if (playlist) {
+        if (playlist.userId !== user.id) {
+            const err = new Error('User not authorized to edit playlist.');
+            err.status = 403;
+            err.title = 'User not authorized to edit playlist.';
+            err.errors = ['User not authorized to edit playlist.'];
+            return next(err)
+        } else {
+            playlist.set({
+                name,
+                imageUrl
+            })
+            return res.json(playlist)
+        }
+    } else {
+        const err = new Error("Playlist couldn't be found.");
+        err.status = 404;
+        err.title = "Playlist couldn't be found.";
+        err.errors = ["Playlist couldn't be found."];
+        return next(err)
+    }
+})
+
 //delete playlist by current user
 router.delete('/:playlistId', requireAuth, async (req, res, next) => {
     const { playlistId } = req.params;
