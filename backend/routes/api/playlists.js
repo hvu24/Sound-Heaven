@@ -73,4 +73,63 @@ router.get('/:playlistId', async (req, res, next) => {
         return next(err)
     }
 });
+
+//add song to playlist by playlist id
+router.post('/:playlistId/songs', requireAuth, async (req, res, next) => {
+    const { playlistId } = req.params;
+    const { songId } = req.body
+    const { user } = req;
+
+    const playlist = await Playlist.findOne({
+        where: {
+            id: playlistId
+        }
+    })
+
+    const song = await Song.findOne({
+        where: {
+            id: songId
+        }
+    })
+
+    if (playlist) {
+        if (song) {
+            if (playlist.userId !== user.id) {
+                const err = new Error('User not authorized to modify playlist.');
+                err.status = 403;
+                err.title = 'User not authorized to modify playlist.';
+                err.errors = ['User not authorized to modify playlist.'];
+                return next(err)
+            } else {
+                await SongPlaylist.create(
+                    {
+                        playlistId: playlist.id,
+                        songId: song.id
+                    }
+                )
+                const newPlaylistSong = await SongPlaylist.findOne({
+                    where: {
+                        playlistId: playlist.id,
+                        songId: song.id
+                    },
+                    attributes: ['id', 'playlistId', 'songId']
+                })
+
+                return res.json(newPlaylistSong)
+            }
+        } else {
+            const err = new Error("Song couldn't be found.");
+            err.status = 404;
+            err.title = "Song couldn't be found.";
+            err.errors = ["Song couldn't be found."];
+            return next(err)
+        }
+    } else {
+        const err = new Error("Playlist couldn't be found.");
+        err.status = 404;
+        err.title = "Playlist couldn't be found.";
+        err.errors = ["Playlist couldn't be found."];
+        return next(err)
+    }
+});
 module.exports = router;
