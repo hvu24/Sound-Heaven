@@ -1,10 +1,33 @@
 const express = require('express')
 const { requireAuth } = require('../../utils/auth');
 const { Song, Artist, Album, Comment, Playlist, User } = require('../../db/models');
-
-
+const { handleValidationErrors } = require('../../utils/validation');
+const { check } = require('express-validator');
 
 const router = express.Router();
+
+const validateAlbum = [
+    check('title')
+        .exists({ checkFalsy: true })
+        .withMessage('Album title is required.'),
+    handleValidationErrors
+];
+
+//create an album
+router.post('/', requireAuth, validateAlbum, async (req, res, next) => {
+    const { title, description, imageUrl } = req.body
+    const { user } = req;
+
+    const newAlbum = await Album.create({
+        artistId: user.id,
+        title,
+        description,
+        imageUrl
+    })
+
+    res.status(201)
+    return res.json(newAlbum)
+})
 
 //get all albums
 router.get('/', async (req, res) => {
