@@ -1,10 +1,138 @@
 const express = require('express')
 const { requireAuth } = require('../../utils/auth');
 const { Song, Artist, Album, Comment, Playlist, User } = require('../../db/models');
-
-
+const { handleValidationErrors } = require('../../utils/validation');
+const { check } = require('express-validator');
 
 const router = express.Router();
+
+const validateComment = [
+    check('body')
+        .exists({ checkFalsy: true })
+        .withMessage('Comment body text is required.'),
+    handleValidationErrors
+];
+
+const validateSong = [
+    check('title')
+        .exists({ checkFalsy: true })
+        .withMessage('Song title is required.'),
+    check('url')
+        .exists({ checkFalsy: true })
+        .withMessage('Audio is required.'),
+    handleValidationErrors
+];
+
+//edit song
+router.put('/:songId', requireAuth, validateSong, async (req, res, next) => {
+    const { title, description, url, imageUrl, albumId } = req.body
+    const { user } = req;
+    const { songId } = req.params
+
+    const song = await Song.findOne({
+        where: {
+            id: songId
+        }
+    })
+
+    if (song) {
+        if (song.artistId !== user.id) {
+            const err = new Error('User not authorized to edit song.');
+            err.status = 403;
+            err.title = 'User not authorized to edit song.';
+            err.errors = ['User not authorized to edit song.'];
+            return next(err)
+        } else {
+            song.set({
+                artistId: user.id,
+                title,
+                description,
+                url,
+                imageUrl,
+                albumId: albumId || null
+            })
+            return res.json(song)
+        }
+    } else {
+        const err = new Error("Song couldn't be found.");
+        err.status = 404;
+        err.title = "Song couldn't be found.";
+        err.errors = ["Song couldn't be found."];
+        return next(err)
+    }
+})
+
+//create song
+router.post('/', requireAuth, validateSong, async (req, res, next) => {
+    const { title, description, url, imageUrl, albumId } = req.body
+    const { user } = req;
+
+    if (albumId === null) {
+        const song = await Song.create({
+            artistId: user.id,
+            title,
+            description,
+            url,
+            imageUrl,
+            albumId
+        })
+        res.status(201)
+        return res.json(song)
+    } else {
+        const album = await Album.findByPk(albumId)
+        if (album) {
+            if (album.artistId !== user.id) {
+                const err = new Error('User not authorized to edit album.');
+                err.status = 403;
+                err.title = 'User not authorized to edit album.';
+                err.errors = ['User not authorized to edit album.'];
+                return next(err)
+            } else {
+                const song = await Song.create({
+                    artistId: user.id,
+                    title,
+                    description,
+                    url,
+                    imageUrl,
+                    albumId
+                })
+                res.status(201)
+                return res.json(song)
+            }
+        } else {
+            const err = new Error("Album couldn't be found.");
+            err.status = 404;
+            err.title = "Album couldn't be found.";
+            err.errors = ["Album couldn't be found."];
+            return next(err)
+        }
+    }
+
+})
+
+//create comment
+router.post('/:songId/comments', requireAuth, validateComment, async (req, res, next) => {
+    const { body } = req.body
+    const { user } = req;
+    const { songId } = req.params
+    const song = await Song.findByPk(songId)
+    if (song) {
+        const comment = await Comment.create({
+            userId: user.id,
+            songId,
+            body
+        })
+
+        return res.json(comment)
+    } else {
+        const err = new Error("Song couldn't be found.");
+        err.status = 404;
+        err.title = "Song couldn't be found.";
+        err.errors = ["Song couldn't be found."];
+        return next(err)
+    }
+
+})
 
 //get all songs
 router.get('/', async (req, res) => {
