@@ -1,10 +1,41 @@
 const express = require('express')
 const { requireAuth } = require('../../utils/auth');
 const { Song, Artist, Album, Comment, Playlist, User } = require('../../db/models');
-
-
+const { handleValidationErrors } = require('../../utils/validation');
+const { check } = require('express-validator');
 
 const router = express.Router();
+
+const validateComment = [
+    check('body')
+        .exists({ checkFalsy: true })
+        .withMessage('Comment body text is required.'),
+    handleValidationErrors
+];
+
+//create comment
+router.post('/:songId/comments', requireAuth, validateComment, async (req, res, next) => {
+    const { body } = req.body
+    const { user } = req;
+    const { songId } = req.params
+    const song = await Song.findByPk(songId)
+    if (song) {
+        const comment = await Comment.create({
+            userId: user.id,
+            songId,
+            body
+        })
+
+        return res.json(comment)
+    } else {
+        const err = new Error("Song couldn't be found.");
+        err.status = 404;
+        err.title = "Song couldn't be found.";
+        err.errors = ["Song couldn't be found."];
+        return next(err)
+    }
+
+})
 
 //get all songs
 router.get('/', async (req, res) => {
