@@ -52,7 +52,7 @@ Returns the information about the current user that is logged in.
 * Require Authentication: true
 * Request
   * Method: ? GET
-  * URL: ? /me
+  * URL: ? /session
   * Body: none
 
 * Successful Response
@@ -79,7 +79,7 @@ information.
 * Require Authentication: false
 * Request
   * Method: ? POST
-  * URL: ? /login
+  * URL: ? /session
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -146,7 +146,7 @@ user's information.
 * Require Authentication: false
 * Request
   * Method: ? POST
-  * URL: ? /signup
+  * URL: ? /users
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -272,7 +272,7 @@ Returns all the songs created by the current user.
 * Require Authentication: true
 * Request
   * Method: ? GET
-  * URL: ? /me/songs
+  * URL: ? /songs/current
   * Body: none
 
 * Successful Response
@@ -306,7 +306,7 @@ Returns all the songs created by the specified artist.
 * Require Authentication: false
 * Request
   * Method: ? GET
-  * URL: ? /artists/:artistId/songs
+  * URL: ? /users/:userId/songs
   * Body: none
 
 * Successful Response
@@ -603,7 +603,7 @@ Returns all the playlists created by the specified artist.
 * Require Authentication: false
 * Request
   * Method: ? GET
-  * URL: ? /artists/:artistId/playlists
+  * URL: ? /users/:userId/playlists
   * Body: none
 
 * Successful Response
@@ -647,7 +647,7 @@ Creates and returns a new playlist.
 * Require Authentication: true
 * Request
   * Method: ? POST
-  * URL: ? /artists/:artistId/playlists
+  * URL: ? /playlists
   * Headers:
     * Content-Type: application/json
   * Body:
@@ -914,7 +914,7 @@ Returns all the playlists created by the current user.
 * Require Authentication: true
 * Request
   * Method: ? GET
-  * URL: ? /me/playlists
+  * URL: ? /playlists/current
   * Body: none
 
 * Successful Response
@@ -1195,7 +1195,7 @@ Returns all the Albums created by the current user.
 * Require Authentication: true
 * Request
   * Method: ? GET
-  * URL: ? /me/albums
+  * URL: ? /albums/current
   * Body: none
 
 * Successful Response
@@ -1227,7 +1227,7 @@ Returns all the albums created by the specified artist.
 * Require Authentication: false
 * Request
   * Method: ? GET
-  * URL: ? /artists/:artistId/albums
+  * URL: ? /artists/:userId/albums
   * Body: none
 
 * Successful Response
@@ -1492,7 +1492,7 @@ Returns the details of an artist specified by their id.
 * Require Authentication: false
 * Request
   * Method: ? GET
-  * URL: ? /artists/:artistId
+  * URL: ? /users/:userId
   * Body: none
 
 * Successful Response
@@ -1531,7 +1531,7 @@ Return songs filtered by query parameters.
 * Require Authentication: false
 * Request
   * Method: ? GET
-  * URL: ? /songs?filter=
+  * URL: ? /songs?page=1&size=3
   * Query Parameters
     * page: integer, minimum: 0, maximum: 10, default: 0
     * size: integer, minimum: 0, maximum: 20, default: 20
