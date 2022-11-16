@@ -23,6 +23,26 @@ const validateSong = [
     handleValidationErrors
 ];
 
+const validateQuery = [
+    check('page')
+        .optional()
+        .isInt()
+        .withMessage('Please provide a valid page number.'),
+    check('size')
+        .optional()
+        .isInt()
+        .withMessage('Please provide a valid size number.'),
+    check('title')
+        .optional()
+        .isAlphanumeric()
+        .withMessage('Please provide a valid title.'),
+    check('createdAt')
+        .optional()
+        .isISO8601()
+        .withMessage('Please provide a valid date.'),
+    handleValidationErrors
+];
+
 //edit song
 router.put('/:songId', requireAuth, validateSong, async (req, res, next) => {
     const { title, description, url, imageUrl, albumId } = req.body
@@ -135,13 +155,39 @@ router.post('/:songId/comments', requireAuth, validateComment, async (req, res, 
 })
 
 //get all songs
-router.get('/', async (req, res) => {
+router.get('/', validateQuery, async (req, res, next) => {
 
-    const songs = await Song.findAll();
+    let size = parseInt(req.query.size) || await Song.count()
+    let page = parseInt(req.query.page) || 1
+
+    if (parseInt(req.query.size) <= 0 || parseInt(req.query.page) <= 0) {
+        size = await Song.count()
+        page = 1
+    }
+
+    let query = {
+        where: {},
+        limit: size,
+        offset: size * (page - 1)
+    }
+
+    if (req.query.title) {
+        query.where.title = req.query.title
+    }
+
+    if (req.query.createdAt) {
+        query.where.createdAt = req.query.createdAt //can't query using createdAt
+    }
+
+    const songs = await Song.findAll(query);
 
     if (!songs) throw new Error('No songs found');
 
-    return res.json({ songs });
+    return res.json({
+        songs,
+        page,
+        size
+    });
 });
 
 //get all songs by current user
