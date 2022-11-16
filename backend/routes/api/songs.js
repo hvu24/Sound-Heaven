@@ -26,12 +26,12 @@ const validateSong = [
 const validateQuery = [
     check('page')
         .optional()
-        .isInt()
-        .withMessage('Please provide a valid page number.'),
+        .isInt({min: 0, max:10})
+        .withMessage('Page must be greater than or equal to 0 and less than or equal to 10.'),
     check('size')
         .optional()
-        .isInt()
-        .withMessage('Please provide a valid size number.'),
+        .isInt({min: 0, max:20})
+        .withMessage('Size must be greater than or equal to 0 and less than or equal to 20.'),
     check('title')
         .optional()
         .isAlphanumeric()
@@ -157,13 +157,8 @@ router.post('/:songId/comments', requireAuth, validateComment, async (req, res, 
 //get all songs
 router.get('/', validateQuery, async (req, res, next) => {
 
-    let size = parseInt(req.query.size) || await Song.count()
-    let page = parseInt(req.query.page) || 1
-
-    if (parseInt(req.query.size) <= 0 || parseInt(req.query.page) <= 0) {
-        size = await Song.count()
-        page = 1
-    }
+    let size = parseInt(req.query.size) || 20
+    let page = parseInt(req.query.page) || 0
 
     let query = {
         where: {},
