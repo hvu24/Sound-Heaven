@@ -47,6 +47,14 @@ router.post(
         }
 
         const user = await User.signup({ email, username, password, firstName, lastName });
+        console.log(user.dataValues.id)
+
+        await Artist.create({
+            totalSongs: 0,
+            totalAlbums: 0,
+            imageUrl: "www.xyz.com",
+            userId: user.dataValues.id,
+        })
 
         user.dataValues.token = await setTokenCookie(res, user);
 
