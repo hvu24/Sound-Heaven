@@ -158,7 +158,7 @@ router.post('/:songId/comments', requireAuth, validateComment, async (req, res, 
 router.get('/', validateQuery, async (req, res, next) => {
 
     let size = parseInt(req.query.size) || 20
-    let page = parseInt(req.query.page) || 0
+    let page = parseInt(req.query.page) || 1
 
     let query = {
         where: {},
