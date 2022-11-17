@@ -161,12 +161,10 @@ router.post('/:playlistId/songs', requireAuth, async (req, res, next) => {
                 err.errors = ['User not authorized to modify playlist.'];
                 return next(err)
             } else {
-                const newSong = await SongPlaylist.create(
+                await SongPlaylist.create(
                     {
                         playlistId: playlist.id,
                         songId: song.id,
-                        PlaylistId: playlist.id,
-                        SongId: song.id
                     }
                 )
                 const newPlaylistSong = await SongPlaylist.findOne({
@@ -174,10 +172,10 @@ router.post('/:playlistId/songs', requireAuth, async (req, res, next) => {
                         playlistId: playlist.id,
                         songId: song.id
                     },
-                    // attributes: ['id', 'playlistId', 'songId']
+                    attributes: ['id', 'playlistId', 'songId']
                 })
 
-                return res.json(newSong)
+                return res.json(newPlaylistSong)
             }
         } else {
             const err = new Error("Song couldn't be found.");
