@@ -116,6 +116,7 @@ router.get('/:playlistId', async (req, res, next) => {
         },
         include: {
             model: Song,
+            as: 'Songs',
             through: { //through with empty attributes array excludes the SongPlaylist object
                 attributes: [] //add attributes to array to include properties from SongPlaylist object
             },
@@ -163,7 +164,7 @@ router.post('/:playlistId/songs', requireAuth, async (req, res, next) => {
                 await SongPlaylist.create(
                     {
                         playlistId: playlist.id,
-                        songId: song.id
+                        songId: song.id,
                     }
                 )
                 const newPlaylistSong = await SongPlaylist.findOne({
