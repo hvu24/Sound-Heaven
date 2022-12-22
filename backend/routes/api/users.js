@@ -47,7 +47,7 @@ router.post(
         }
 
         const user = await User.signup({ email, username, password, firstName, lastName });
-        console.log(user.dataValues.id)
+        // console.log(user.dataValues.id)
 
         await Artist.create({
             totalSongs: 0,
