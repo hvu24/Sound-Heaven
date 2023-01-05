@@ -38,7 +38,7 @@ export const login = (user) => async (dispatch) => {
     return response;
 };
 
-const initialState = { user: null };
+const initialState = { user: null }; //user can also be set to empty object {}
 
 const sessionReducer = (state = initialState, action) => {
     let newState;
@@ -70,6 +70,14 @@ export const signup = (user) => async (dispatch) => {
     });
     const data = await response.json();
     dispatch(setUser(data));
+    return response;
+};
+
+export const logout = () => async (dispatch) => {
+    const response = await csrfFetch('/api/session', {
+        method: 'DELETE',
+    });
+    dispatch(removeUser());
     return response;
 };
 
