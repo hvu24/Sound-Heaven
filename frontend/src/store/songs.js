@@ -6,12 +6,6 @@ export const loadSongs = (songs) => {
         songs
     }
 }
-export const loadUserSongs = (songs) => {
-    return {
-        type: 'LOAD_USER_SONGS',
-        songs
-    }
-}
 
 export const loadAllSongs = () => async (dispatch) => {
     const response = await csrfFetch('/api/songs');
@@ -19,15 +13,6 @@ export const loadAllSongs = () => async (dispatch) => {
         const songsObj = await response.json();
         const songsArr = songsObj.songs
         dispatch(loadSongs(songsArr))
-    }
-};
-
-export const loadAllUserSongs = () => async (dispatch) => {
-    const response = await csrfFetch('/api/songs/current');
-    if (response.ok) {
-        const songsObj = await response.json();
-        const songsArr = songsObj.songs
-        dispatch(loadUserSongs(songsArr))
     }
 };
 
