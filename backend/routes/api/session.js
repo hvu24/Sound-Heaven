@@ -59,10 +59,11 @@ router.get(
     restoreUser,
     (req, res) => {
         const { user } = req;
-        // const { token } = req.cookies
-        // user.dataValues.token = token
 
         if (user) {
+            const { token } = req.cookies
+            user.dataValues.token = token
+            
             return res.json(
                 user,
             );
