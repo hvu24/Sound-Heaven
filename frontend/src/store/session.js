@@ -38,7 +38,7 @@ export const login = (user) => async (dispatch) => {
     return response;
 };
 
-const initialState = { user: null }; //user can also be set to empty object {}
+const initialState = { user: {} }; //user can be set to empty object {} or null
 
 const sessionReducer = (state = initialState, action) => {
     let newState;
@@ -49,7 +49,7 @@ const sessionReducer = (state = initialState, action) => {
             return newState;
         case REMOVE_USER:
             newState = Object.assign({}, state);
-            newState.user = null;
+            newState.user = {};
             return newState;
         default:
             return state;
