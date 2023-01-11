@@ -1,7 +1,7 @@
 import './SongList.css'
 import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
-import { loadAllSongs } from '../../store/songs'
+import { loadAllSongs } from '../../store/songsReducer'
 import SongCard from '../SongCard/SongCard'
 
 const SongList = () => {
