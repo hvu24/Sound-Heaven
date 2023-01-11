@@ -71,6 +71,7 @@ router.put('/:songId', requireAuth, validateSong, async (req, res, next) => {
                 imageUrl,
                 albumId: albumId || null
             })
+            song.save()
             return res.json(song)
         }
     } else {

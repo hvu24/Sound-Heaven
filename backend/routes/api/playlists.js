@@ -52,6 +52,7 @@ router.put('/:playlistId', requireAuth, validatePlaylist, async (req, res, next)
                 name,
                 imageUrl
             })
+            playlist.save()
             return res.json(playlist)
         }
     } else {
