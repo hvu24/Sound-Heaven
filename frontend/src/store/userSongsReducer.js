@@ -73,7 +73,7 @@ export const updateSong = (song) => async (dispatch) => {
         }),
     });
     const data = await response.json();
-    console.log(data)
+
     dispatch(editSong(data));
     return response;
 };
