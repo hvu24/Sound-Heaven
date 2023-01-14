@@ -20,11 +20,16 @@ const UserSongList = () => {
     } else {
         return (
             <div>
-                {songsArr.map((song) => {
-                    return (
-                            <SongCard key={song.id} song={song} songId={song.id}></SongCard>
-                    )
-                })}
+                <h1>Your Song List</h1>
+                <ul className='user-songs'>
+                    <div>
+                        {songsArr.map((song) => {
+                            return (
+                                <SongCard key={song.id} song={song} songId={song.id}></SongCard>
+                            )
+                        })}
+                    </div>
+                </ul>
             </div>
         )
     }

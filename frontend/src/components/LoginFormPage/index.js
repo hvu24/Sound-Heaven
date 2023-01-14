@@ -29,7 +29,7 @@ function LoginFormPage() {
     const handleDemoLogin = (e) => {
         e.preventDefault();
         const fakeUser = {
-            credential: 'FakeUser1',
+            credential: 'Illenium',
             password: 'password2'
         }
         return dispatch(sessionActions.login(fakeUser))

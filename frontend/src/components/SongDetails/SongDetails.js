@@ -6,12 +6,12 @@ import { useParams } from 'react-router-dom';
 import { songDetails } from '../../store/songDetailsReducer';
 import CommentList from '../CommentList/CommentList';
 import { createComment } from '../../store/commentsReducer';
-import { loadAllUserSongs } from '../../store/userSongsReducer';
+import { loadAllSongs } from '../../store/songsReducer';
 
 function SongDetails() {
     const dispatch = useDispatch();
     const { songId } = useParams();
-    const songsObj = useSelector(state => state.userSongReducer)
+    const songsObj = useSelector(state => state.songReducer)
     const song = songsObj[songId]
     const [artistId, setArtistId] = useState('');
     const [title, setTitle] = useState('');
@@ -25,11 +25,11 @@ function SongDetails() {
 
     const songDetail = useSelector(state => state.songDetailsReducer[songId])
     const [artist, setArtist] = useState({})
-
+    console.log(imageUrl)
 
     useEffect(() => {
         if (!song) {
-            dispatch(loadAllUserSongs())
+            dispatch(loadAllSongs())
         } else {
             setTitle(song.title)
             setDescription(song.description)
@@ -66,31 +66,32 @@ function SongDetails() {
     };
 
     return (
-        <>
-            <div>Song Id: {songId}</div>
-            <div>Artist Id: {artistId}</div>
+        <div className='showcase-wrapper'>
+            {/* <div>Song Id: {songId}</div>
+            <div>Artist Id: {artistId}</div> */}
             <div>Artist Name: {artist.username}</div>
             <div>Title: {title}</div>
             <div>Description: {description}</div>
-            <div>Url: {url}</div>
-            <div>Image Url: {imageUrl}</div>
+            {/* <div>Url: {url}</div>
+            <div>Image Url: {imageUrl}</div> */}
+            <img className='preview-img' src={imageUrl} />
             {/* <div>{albumId}</div> */}
             <ul>
                 {errors.map((error, idx) => <li key={idx}>{error}</li>)}
             </ul>
-            {sessionUser.id && <form onSubmit={handleSubmit}>
-                <label>
-                    <textarea
-                        rows={5}
-                        cols={50}
-                        value={body}
-                        onChange={(e) => setBody(e.target.value)}
-                    />
-                </label>
-                <button type="submit">Create Comment</button>
-            </form>}
+            {sessionUser.id &&
+                <textarea
+                    rows={5}
+                    cols={65}
+                    value={body}
+                    onChange={(e) => setBody(e.target.value)}
+                />
+            }
+            {sessionUser.id &&
+                <button className='create-comment-button' onClick={handleSubmit}>Create Comment</button>
+            }
             <CommentList songId={songId} />
-        </>
+        </div>
 
     );
 
