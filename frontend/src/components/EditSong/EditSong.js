@@ -17,6 +17,7 @@ function EditSong() {
     const [description, setDescription] = useState('');
     const [url, setUrl] = useState('');
     const [imageUrl, setImageUrl] = useState('');
+    const [errors, setErrors] = useState([]);
     // const [albumId, setAlbumId] = useState(null);
 
     useEffect(() => {
@@ -37,22 +38,30 @@ function EditSong() {
 
         const handleSubmit = (e) => {
             e.preventDefault();
+            setErrors([]);
 
             dispatch(updateSong({ songId, title, description, url, imageUrl }))
-                .then(() => window.alert(`Song with the title of ${title} successfully edited!`))
-
-            history.push(`/songs/current`)
+                .then(() => {
+                    window.alert(`Song with the title of ${title} successfully edited!`)
+                    history.push(`/songs/current`)
+                })
+                .catch(async (res) => {
+                    const data = await res.json();
+                    if (data && data.errors) setErrors(data.errors);
+                });
         };
 
         return (
             <form onSubmit={handleSubmit}>
+                <ul>
+                    {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+                </ul>
                 <label>
                     Title
                     <input
                         type="text"
                         value={title}
                         onChange={(e) => setTitle(e.target.value)}
-                        required
                     />
                 </label>
                 <label>
@@ -61,7 +70,6 @@ function EditSong() {
                         type="text"
                         value={description}
                         onChange={(e) => setDescription(e.target.value)}
-                        required
                     />
                 </label>
                 <label>
@@ -70,7 +78,6 @@ function EditSong() {
                         type="text"
                         value={url}
                         onChange={(e) => setUrl(e.target.value)}
-                        required
                     />
                 </label>
                 <label>
@@ -79,7 +86,6 @@ function EditSong() {
                         type="text"
                         value={imageUrl}
                         onChange={(e) => setImageUrl(e.target.value)}
-                        required
                     />
                 </label>
                 {/* <label>

@@ -18,6 +18,7 @@ function SongDetails() {
     const [albumId, setAlbumId] = useState(0);
     const sessionUser = useSelector((state) => state.session.user);
     const [body, setBody] = useState('')
+    const [errors, setErrors] = useState([]);
 
     useEffect(() => {
         if (!song) {
@@ -33,10 +34,14 @@ function SongDetails() {
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        setErrors([]);
 
         dispatch(createComment({ body, songId }))
             .then(() => window.alert(`Comment successfully created!`))
-
+            .catch(async (res) => {
+                const data = await res.json();
+                if (data && data.errors) setErrors(data.errors);
+            });
     };
 
     return (
@@ -46,6 +51,9 @@ function SongDetails() {
             <div>{url}</div>
             <div>{imageUrl}</div>
             <div>{albumId}</div>
+            <ul>
+                {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+            </ul>
             {sessionUser.id && <form onSubmit={handleSubmit}>
                 <label>
                     <textarea
@@ -53,7 +61,6 @@ function SongDetails() {
                         cols={50}
                         value={body}
                         onChange={(e) => setBody(e.target.value)}
-                        required
                     />
                 </label>
                 <button type="submit">Create Comment</button>
