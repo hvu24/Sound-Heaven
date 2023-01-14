@@ -64,13 +64,13 @@ function DeleteSong() {
 
         return (
             <>
-                <div>Song Id: {songId}</div>
-                <div>Artist Id: {artistId}</div>
+                {/* <div>Song Id: {songId}</div>
+                <div>Artist Id: {artistId}</div> */}
                 <div>Artist Name: {artist.username}</div>
                 <div>Title: {title}</div>
                 <div>Description: {description}</div>
-                <div>Url: {url}</div>
-                <div>Image Url:{imageUrl}</div>
+                {/* <div>Url: {url}</div>
+                <div>Image Url:{imageUrl}</div> */}
                 <button onClick={handleSubmit}>Delete Song</button>
             </>
         );

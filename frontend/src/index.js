@@ -7,6 +7,7 @@ import App from './App';
 import configureStore from './store';
 import { restoreCSRF, csrfFetch } from './store/csrf';
 import * as sessionActions from './store/session';
+import Favicon from 'react-favicon'
 
 const store = configureStore();
 
@@ -30,6 +31,7 @@ function Root() {
 
 ReactDOM.render(
   <React.StrictMode>
+    <Favicon url='https://cdn.icon-icons.com/icons2/790/PNG/512/soundcloud_icon-icons.com_65447.png' />
     <Root />
   </React.StrictMode>,
   document.getElementById('root'),

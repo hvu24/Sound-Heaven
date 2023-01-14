@@ -20,13 +20,13 @@ const SongCard = ({ song, songId }) => {
 
     return (
         <div className='song-card'>
-            <div>Song Id: {song.id}</div>
-            <div>Artist Id: {song.artistId}</div>
+            {/* <div>Song Id: {song.id}</div>
+            <div>Artist Id: {song.artistId}</div> */}
             <div>Artist Name: {artist.username}</div>
             <div>Title: {song.title}</div>
             <div>Description: {song.description}</div>
-            <div>Url: {song.url}</div>
-            <div>Image Url: {song.imageUrl}</div>
+            {/* <div>Url: {song.url}</div>
+            <div>Image Url: {song.imageUrl}</div> */}
             <NavLink to={`/songs/${song.id}/details`}>Song Details</NavLink>
             {(sessionUser.id && song.artistId === sessionUser.id) && <NavLink to={`/songs/${song.id}/delete`}>Delete Song</NavLink>}
             {(sessionUser.id && song.artistId === sessionUser.id) && <NavLink to={`/songs/${song.id}/edit`}>Edit Song</NavLink>}
