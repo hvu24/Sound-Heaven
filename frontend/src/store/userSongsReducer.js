@@ -29,16 +29,21 @@ export const editSong = (song) => {
 };
 
 export const loadAllUserSongs = () => async (dispatch) => {
-    const response = await csrfFetch('/api/songs/current');
-    if (response.ok) {
+    try {
+        const response = await csrfFetch(`/api/songs/current`);
         const songsObj = await response.json();
         const songsArr = songsObj.songs
         dispatch(loadUserSongs(songsArr))
+    } catch (response) {
+        if (!response.ok) {
+            dispatch(loadUserSongs([]))
+        }
     }
 };
 
 export const createSong = (song) => async (dispatch) => {
-    const { title, description, url, imageUrl, albumId } = song;
+    const { title, description, url, imageUrl } = song;
+    const albumId = null //included this line because backend expects an albumId but isn't required for project
     const response = await csrfFetch("/api/songs", {
         method: "POST",
         body: JSON.stringify({
@@ -59,7 +64,8 @@ export const removeSong = (songId) => async (dispatch) => {
 };
 
 export const updateSong = (song) => async (dispatch) => {
-    const { songId, title, description, url, imageUrl, albumId } = song;
+    const { songId, title, description, url, imageUrl } = song;
+    const albumId = null //included this line because backend expects an albumId but isn't required for project
     const response = await csrfFetch(`/api/songs/${songId}`, {
         method: "PUT",
         body: JSON.stringify({
@@ -81,9 +87,12 @@ const userSongReducer = (state = initialState, action) => {
             delete newState[action.id]
             return newState
         case 'LOAD_USER_SONGS':
-            action.songs.forEach(song => {
-                newState[song.id] = song
-            })
+            newState = {}
+            if (action.songs.length > 0) {
+                action.songs.forEach(song => {
+                    newState[song.id] = song
+                })
+            }
             return newState;
         case 'CREATE_SONG':
             newState[action.song.id] = action.song

@@ -13,18 +13,23 @@ function EditSong() {
     const sessionUser = useSelector((state) => state.session.user);
     const { songId } = useParams();
     const song = useSelector(state => state.userSongReducer[songId])
-    // const song = songsObj[songId]
-    console.log(song)
-    const [title, setTitle] = useState(song?.title || '');
-    console.log(title)
-    const [description, setDescription] = useState(song?.description);
-    const [url, setUrl] = useState(song?.url);
-    const [imageUrl, setImageUrl] = useState(song?.imageUrl);
-    const [albumId, setAlbumId] = useState(song?.albumId);
+    const [title, setTitle] = useState('');
+    const [description, setDescription] = useState('');
+    const [url, setUrl] = useState('');
+    const [imageUrl, setImageUrl] = useState('');
+    // const [albumId, setAlbumId] = useState(null);
 
     useEffect(() => {
-        dispatch(loadAllUserSongs())
-    }, [dispatch])
+        if (!song) {
+            dispatch(loadAllUserSongs())
+        } else {
+            setTitle(song.title)
+            setDescription(song.description)
+            setUrl(song.url)
+            setImageUrl(song.imageUrl)
+            // setAlbumId(song.albumId)
+        }
+    }, [dispatch, song])
 
     if (!sessionUser.id) {
         return <Redirect to="/login" />
@@ -32,7 +37,10 @@ function EditSong() {
 
         const handleSubmit = (e) => {
             e.preventDefault();
-            dispatch(updateSong({ songId, title, description, url, imageUrl, albumId }))
+
+            dispatch(updateSong({ songId, title, description, url, imageUrl }))
+                .then(() => window.alert(`Song with the title of ${title} successfully edited!`))
+
             history.push(`/songs/current`)
         };
 
@@ -74,15 +82,14 @@ function EditSong() {
                         required
                     />
                 </label>
-                <label>
+                {/* <label>
                     Album Id
                     <input
                         type="number"
                         value={albumId}
                         onChange={(e) => setAlbumId(e.target.value)}
-                        required
                     />
-                </label>
+                </label> */}
                 <button type="submit">Edit Song</button>
             </form>
         );

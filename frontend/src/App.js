@@ -11,6 +11,8 @@ import UserSongList from "./components/UserSongList/UserSongList";
 import CreateSong from "./components/CreateSong/CreateSong";
 import DeleteSong from "./components/DeleteSong/DeleteSong";
 import EditSong from "./components/EditSong/EditSong";
+import SongDetails from "./components/SongDetails/SongDetails";
+import DeleteComment from "./components/DeleteComment/DeleteComment";
 
 function App() {
   const dispatch = useDispatch();
@@ -30,11 +32,17 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
+          <Route path='/songs/:songId/comments/:commentId/delete'>
+            <DeleteComment />
+          </Route>
           <Route path='/songs/:songId/delete'>
             <DeleteSong />
           </Route>
           <Route path='/songs/:songId/edit'>
             <EditSong />
+          </Route>
+          <Route path='/songs/:songId/details'>
+            <SongDetails />
           </Route>
           <Route path='/songs/current'>
             <UserSongList />

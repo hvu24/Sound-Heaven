@@ -1,18 +1,18 @@
 import './SongList.css'
-import { useEffect, useState } from 'react'
+import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { loadAllSongs } from '../../store/songsReducer'
 import SongCard from '../SongCard/SongCard'
 
 const SongList = () => {
-    const [isLoaded, setIsLoaded] = useState(false);
     const dispatch = useDispatch()
     const songsObj = useSelector(state => state.songReducer)
     const songsArr = Object.values(songsObj)
-    // console.log(songsArr)
+
     useEffect(() => {
-        dispatch(loadAllSongs()).then(() => setIsLoaded(true))
+        dispatch(loadAllSongs())
     }, [dispatch])
+
     return (
         <div>
             {songsArr.map((song) => {

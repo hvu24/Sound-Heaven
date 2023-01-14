@@ -13,8 +13,7 @@ function CreateSong() {
     const [description, setDescription] = useState("");
     const [url, setUrl] = useState("");
     const [imageUrl, setImageUrl] = useState("");
-    const [albumId, setAlbumId] = useState("");
-
+    // const [albumId, setAlbumId] = useState(null);
 
     if (!sessionUser.id) {
         return <Redirect to="/login" />
@@ -22,7 +21,10 @@ function CreateSong() {
 
         const handleSubmit = (e) => {
             e.preventDefault();
-            dispatch(createSong({ title, description, url, imageUrl, albumId }))
+
+            dispatch(createSong({ title, description, url, imageUrl }))
+                .then(() => window.alert(`Song with the title of ${title} successfully created!`))
+
             history.push(`/songs/current`)
         };
 
@@ -64,15 +66,14 @@ function CreateSong() {
                         required
                     />
                 </label>
-                <label>
+                {/* <label>
                     Album Id
                     <input
                         type="number"
                         value={albumId}
                         onChange={(e) => setAlbumId(e.target.value)}
-                        required
                     />
-                </label>
+                </label> */}
                 <button type="submit">Create Song</button>
             </form>
         );
