@@ -54,6 +54,7 @@ router.put('/:albumId', requireAuth, validateAlbum, async (req, res, next) => {
                 description,
                 imageUrl
             })
+            album.save()
             return res.json(album)
         }
     } else {

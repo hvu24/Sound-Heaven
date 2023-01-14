@@ -36,6 +36,7 @@ router.put('/:commentId', requireAuth, validateComment, async (req, res, next) =
             comment.set({
                 body
             })
+            comment.save()
             return res.json(comment)
         }
     } else {

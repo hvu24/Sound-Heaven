@@ -26,31 +26,43 @@ function LoginFormPage() {
             });
     }
 
+    const handleDemoLogin = (e) => {
+        e.preventDefault();
+        const fakeUser = {
+            credential: 'FakeUser1',
+            password: 'password2'
+        }
+        return dispatch(sessionActions.login(fakeUser))
+    }
+
     return (
-        <form onSubmit={handleSubmit}>
-            <ul>
-                {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-            </ul>
-            <label>
-                Username or Email
-                <input
-                    type="text"
-                    value={credential}
-                    onChange={(e) => setCredential(e.target.value)}
-                    required
-                />
-            </label>
-            <label>
-                Password
-                <input
-                    type="password"
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    required
-                />
-            </label>
-            <button type="submit">Log In</button>
-        </form>
+        <>
+            <form onSubmit={handleSubmit}>
+                <ul>
+                    {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+                </ul>
+                <label>
+                    Username or Email
+                    <input
+                        type="text"
+                        value={credential}
+                        onChange={(e) => setCredential(e.target.value)}
+                    />
+                </label>
+                <label>
+                    Password
+                    <input
+                        type="password"
+                        value={password}
+                        onChange={(e) => setPassword(e.target.value)}
+                    />
+                </label>
+                <button type="submit">Log In</button>
+            </form>
+            <form onSubmit={handleDemoLogin}>
+                <button type="submit">Demo User Log In</button>
+            </form>
+        </>
     );
 }
 

@@ -17,20 +17,32 @@ const validateSong = [
     check('title')
         .exists({ checkFalsy: true })
         .withMessage('Song title is required.'),
+    check('description')
+        .exists({ checkFalsy: true })
+        .withMessage('Description is required.'),
     check('url')
         .exists({ checkFalsy: true })
-        .withMessage('Audio is required.'),
+        .withMessage('Audio url is required.'),
+    check('url')
+        .isURL()
+        .withMessage('Audio url must be in valid url format.'),
+    check('imageUrl')
+        .exists({ checkFalsy: true })
+        .withMessage('Image url is required.'),
+    check('imageUrl')
+        .isURL()
+        .withMessage('Image Url must be in valid url format.'),
     handleValidationErrors
 ];
 
 const validateQuery = [
     check('page')
         .optional()
-        .isInt({min: 0, max:10})
+        .isInt({ min: 0, max: 10 })
         .withMessage('Page must be greater than or equal to 0 and less than or equal to 10.'),
     check('size')
         .optional()
-        .isInt({min: 0, max:20})
+        .isInt({ min: 0, max: 20 })
         .withMessage('Size must be greater than or equal to 0 and less than or equal to 20.'),
     check('title')
         .optional()
@@ -71,6 +83,7 @@ router.put('/:songId', requireAuth, validateSong, async (req, res, next) => {
                 imageUrl,
                 albumId: albumId || null
             })
+            song.save()
             return res.json(song)
         }
     } else {
