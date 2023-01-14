@@ -17,7 +17,7 @@ const SongList = () => {
         <div>
             {songsArr.map((song) => {
                 return (
-                    <SongCard key={song.id} song={song}></SongCard>
+                    <SongCard key={song.id} song={song} songId={song.id}></SongCard>
                 )
             })}
         </div>

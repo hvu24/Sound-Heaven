@@ -14,6 +14,7 @@ function DeleteComment() {
     const commentsObj = useSelector(state => state.commentsReducer)
     const comment = commentsObj[commentId]
     const [body, setBody] = useState('');
+    const [userName, setUserName] = useState('')
 
     const sessionUser = useSelector((state) => state.session.user);
 
@@ -22,6 +23,7 @@ function DeleteComment() {
             dispatch(loadAllComments(songId))
         } else {
             setBody(comment.body)
+            setUserName(comment.User.username)
         }
     }, [dispatch, comment, songId])
 
@@ -33,15 +35,18 @@ function DeleteComment() {
             e.preventDefault();
 
             dispatch(removeComment(commentId))
-                .then(() => window.alert(`Song with the title of ${comment.body} successfully deleted!`))
+                .then(() => {
+                    window.alert(`Comment successfully deleted!`)
+                    history.push(`/songs/${songId}/details`)
+                })
 
-            history.push(`/songs`)
         };
 
         return (
             <>
+                <div>Song Id: {songId}</div>
+                <div>User Name: {userName}</div>
                 <div>{body}</div>
-                <div>{songId}</div>
                 <button onClick={handleSubmit}>Delete Comment</button>
             </>
 

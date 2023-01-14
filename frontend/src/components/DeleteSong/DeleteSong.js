@@ -6,6 +6,7 @@ import { Redirect, useHistory } from "react-router-dom";
 import { removeSong } from '../../store/userSongsReducer';
 import { useParams } from 'react-router-dom';
 import { loadAllUserSongs } from '../../store/userSongsReducer';
+import { songDetails } from '../../store/songDetailsReducer';
 
 function DeleteSong() {
     const dispatch = useDispatch();
@@ -21,6 +22,9 @@ function DeleteSong() {
 
     const sessionUser = useSelector((state) => state.session.user);
 
+    const songDetail = useSelector(state => state.songDetailsReducer[songId])
+    const [artist, setArtist] = useState({})
+
     useEffect(() => {
         if (!song) {
             dispatch(loadAllUserSongs())
@@ -33,6 +37,14 @@ function DeleteSong() {
         }
     }, [dispatch, song])
 
+    useEffect(() => {
+        if (!songDetail) {
+            dispatch(songDetails(songId))
+        } else {
+            setArtist(songDetail.Artist)
+        }
+    }, [dispatch, songId, songDetail])
+
 
 
     if (!sessionUser.id) {
@@ -43,21 +55,24 @@ function DeleteSong() {
             e.preventDefault();
 
             dispatch(removeSong(songId))
-                .then(() => window.alert(`Song with the title of ${song.title} successfully deleted!`))
+                .then(() => {
+                    window.alert(`Song with the title of ${songDetail.title} successfully deleted!`)
+                    history.push(`/songs/current`)
+                })
 
-            history.push(`/songs/current`)
         };
 
         return (
             <>
-                <div>{artistId}</div>
-                <div>{title}</div>
-                <div>{description}</div>
-                <div>{url}</div>
-                <div>{imageUrl}</div>
+                <div>Song Id: {songId}</div>
+                <div>Artist Id: {artistId}</div>
+                <div>Artist Name: {artist.username}</div>
+                <div>Title: {title}</div>
+                <div>Description: {description}</div>
+                <div>Url: {url}</div>
+                <div>Image Url:{imageUrl}</div>
                 <button onClick={handleSubmit}>Delete Song</button>
             </>
-
         );
     }
 }
