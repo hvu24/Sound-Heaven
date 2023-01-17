@@ -31,7 +31,7 @@ function Root() {
 
 ReactDOM.render(
   <React.StrictMode>
-    <Favicon url='https://cdn.icon-icons.com/icons2/2619/PNG/256/among_us_soundcloud_icon_156929.png' />
+    {/* <Favicon url='https://cdn.icon-icons.com/icons2/2619/PNG/256/among_us_soundcloud_icon_156929.png' /> */}
     <Root />
   </React.StrictMode>,
   document.getElementById('root'),
