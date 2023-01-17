@@ -9,35 +9,39 @@
     min-height: 100vh;
 }
 
-/* ul {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-} */
 form {
-    color: #52eca7;
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    flex-direction: column;
 }
 
 h1 {
     text-align: center;
     padding: 20px;
-    color:#52eca7
+    color: black
 }
 
 button {
     border-radius: 10px;
-    padding: 10px;
-    margin: 10px;
-    background: #5003d6;
+    padding: 2px;
+    margin: 2px;
+    background: #7e4fcf;
     color: white;
-    width: 140px;
-    height: 40;
+    width: 120px;
+    height: 20;
 }
 
 :active {
     color: red
 }
 
+nav {
+    display: flex;
+    justify-content: space-around;
+    height: 20px;
+    width: auto;
+    background-color: #52eca7;
+    border: 2px solid black;
+    border-radius: 10px;
+}

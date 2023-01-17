@@ -15,7 +15,7 @@ const SongList = () => {
 
     return (
         <div>
-            <h1>All Songs List</h1>
+            <h1>All Songs</h1>
             <ul className='all-songs'>
                 <div>
                     {songsArr.map((song) => {
