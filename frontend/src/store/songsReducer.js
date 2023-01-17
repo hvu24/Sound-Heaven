@@ -16,11 +16,22 @@ export const loadAllSongs = () => async (dispatch) => {
     }
 };
 
+export const deleteSongFromAll = (id) => {
+    return {
+        type: 'DELETE_SONG',
+        id
+    };
+};
+
 const initialState = {};
 
 const songReducer = (state = initialState, action) => {
     let newState;
     switch (action.type) {
+        case 'DELETE_SONG':
+            newState = { ...state }
+            delete newState[action.id]
+            return newState
         case 'LOAD_SONGS':
             newState = { ...state }
             action.songs.forEach(song => {

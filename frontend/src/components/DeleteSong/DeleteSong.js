@@ -7,6 +7,8 @@ import { removeSong } from '../../store/userSongsReducer';
 import { useParams } from 'react-router-dom';
 import { loadAllUserSongs } from '../../store/userSongsReducer';
 import { songDetails } from '../../store/songDetailsReducer';
+// import { loadAllSongs } from '../../store/songsReducer';
+import { deleteSongFromAll } from '../../store/songsReducer';
 
 function DeleteSong() {
     const dispatch = useDispatch();
@@ -16,9 +18,9 @@ function DeleteSong() {
     const song = songsObj[songId]
     const [title, setTitle] = useState('');
     const [description, setDescription] = useState('');
-    const [url, setUrl] = useState('');
-    const [imageUrl, setImageUrl] = useState('');
-    const [artistId, setArtistId] = useState('');
+    // const [url, setUrl] = useState('');
+    // const [imageUrl, setImageUrl] = useState('');
+    // const [artistId, setArtistId] = useState('');
 
     const sessionUser = useSelector((state) => state.session.user);
 
@@ -31,9 +33,9 @@ function DeleteSong() {
         } else {
             setTitle(song.title)
             setDescription(song.description)
-            setUrl(song.url)
-            setImageUrl(song.imageUrl)
-            setArtistId(song.artistId)
+            // setUrl(song.url)
+            // setImageUrl(song.imageUrl)
+            // setArtistId(song.artistId)
         }
     }, [dispatch, song])
 
@@ -56,6 +58,8 @@ function DeleteSong() {
 
             dispatch(removeSong(songId))
                 .then(() => {
+                    // dispatch(loadAllSongs())
+                    dispatch(deleteSongFromAll(songId))
                     window.alert(`Song with the title of ${songDetail.title} successfully deleted!`)
                     history.push(`/songs/current`)
                 })
