@@ -58,7 +58,6 @@ function DeleteSong() {
 
             dispatch(removeSong(songId))
                 .then(() => {
-                    // dispatch(loadAllSongs())
                     dispatch(deleteSongFromAll(songId))
                     window.alert(`Song with the title of ${songDetail.title} successfully deleted!`)
                     history.push(`/songs/current`)
