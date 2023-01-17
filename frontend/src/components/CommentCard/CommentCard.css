@@ -1,3 +1,8 @@
 .comment-card {
-    color: #52eca7
+    color: #52eca7;
+    padding: 15px;
+    width: 400px;
+    background-color: white;
+    color: black;
+    height: auto;
 }

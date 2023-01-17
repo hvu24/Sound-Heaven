@@ -13,28 +13,33 @@ function Navigation({ isLoaded }) {
     if (sessionUser?.id) { //if sessionUser exists try to key into id, if not then move on '(sessionUser && sessionUser.id)'
         sessionLinks = (
             <>
-                <ProfileButton user={sessionUser} />
+                <NavLink exact to="/">Home</NavLink>
                 <NavLink to="/songs/current">My Songs</NavLink>
                 <NavLink to="/songs/create">Create Song</NavLink>
                 <NavLink to="/songs">All Songs</NavLink>
+                <a href="https://www.linkedin.com/in/hung-v-67a490214/">LinkedIn</a>
+                <a href="https://github.com/hvu24">GitHub</a>
             </>
         );
     } else {
         sessionLinks = (
             <>
+                <NavLink exact to="/">Home</NavLink>
                 <NavLink to="/login">Log In</NavLink>
                 <NavLink to="/signup">Sign Up</NavLink>
                 <NavLink to="/songs">All Songs</NavLink>
+                <a href="https://www.linkedin.com/in/hung-v-67a490214/">LinkedIn</a>
+                <a href="https://github.com/hvu24">GitHub</a>
             </>
         );
     }
 
     return (
         <ul>
-            <li>
-                <NavLink exact to="/">Home</NavLink>
+            {(sessionUser.id && isLoaded) && <ProfileButton user={sessionUser} />}
+            <nav>
                 {isLoaded && sessionLinks}
-            </li>
+            </nav>
         </ul>
     );
 }

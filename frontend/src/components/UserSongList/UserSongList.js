@@ -20,7 +20,7 @@ const UserSongList = () => {
     } else {
         return (
             <div>
-                <h1>Your Song List</h1>
+                <h1>Your Songs</h1>
                 <ul className='user-songs'>
                     <div>
                         {songsArr.map((song) => {

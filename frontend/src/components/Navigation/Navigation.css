@@ -1,0 +1,8 @@
+.profile-dropdown {
+    position: absolute;
+    background-color: white;
+    border-radius: 10px;
+    align-items: center;
+    border: 2px solid rgb(19, 16, 16);
+}
+

@@ -7,6 +7,7 @@ import { songDetails } from '../../store/songDetailsReducer';
 import CommentList from '../CommentList/CommentList';
 import { createComment } from '../../store/commentsReducer';
 import { loadAllSongs } from '../../store/songsReducer';
+import { NavLink } from 'react-router-dom';
 
 function SongDetails() {
     const dispatch = useDispatch();
@@ -76,6 +77,8 @@ function SongDetails() {
             <div>Image Url: {imageUrl}</div> */}
             <img className='preview-img' src={imageUrl} />
             {/* <div>{albumId}</div> */}
+            {(sessionUser.id && artistId === sessionUser.id) && <NavLink to={`/songs/${song.id}/delete`}>Delete Song</NavLink>}
+            {(sessionUser.id && artistId === sessionUser.id) && <NavLink to={`/songs/${song.id}/edit`}>Edit Song</NavLink>}
             <ul>
                 {errors.map((error, idx) => <li key={idx}>{error}</li>)}
             </ul>

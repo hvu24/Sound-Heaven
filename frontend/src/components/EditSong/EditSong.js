@@ -52,51 +52,77 @@ function EditSong() {
         };
 
         return (
+            // <form onSubmit={handleSubmit}>
+            //     <ul>
+            //         {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+            //     </ul>
+            //     <label>
+            //         Title
+            //         <input
+            //             type="text"
+            //             value={title}
+            //             onChange={(e) => setTitle(e.target.value)}
+            //         />
+            //     </label>
+            //     <label>
+            //         Description
+            //         <input
+            //             type="text"
+            //             value={description}
+            //             onChange={(e) => setDescription(e.target.value)}
+            //         />
+            //     </label>
+            //     <label>
+            //         Url
+            //         <input
+            //             type="text"
+            //             value={url}
+            //             onChange={(e) => setUrl(e.target.value)}
+            //         />
+            //     </label>
+            //     <label>
+            //         Image Url
+            //         <input
+            //             type="text"
+            //             value={imageUrl}
+            //             onChange={(e) => setImageUrl(e.target.value)}
+            //         />
+            //     </label>
+            //     {/* <label>
+            //         Album Id
+            //         <input
+            //             type="number"
+            //             value={albumId}
+            //             onChange={(e) => setAlbumId(e.target.value)}
+            //         />
+            //     </label> */}
+            //     <button type="submit">Edit Song</button>
+            // </form>
             <form onSubmit={handleSubmit}>
                 <ul>
                     {errors.map((error, idx) => <li key={idx}>{error}</li>)}
                 </ul>
-                <label>
-                    Title
-                    <input
-                        type="text"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)}
-                    />
-                </label>
-                <label>
-                    Description
-                    <input
-                        type="text"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)}
-                    />
-                </label>
-                <label>
-                    Url
-                    <input
-                        type="text"
-                        value={url}
-                        onChange={(e) => setUrl(e.target.value)}
-                    />
-                </label>
-                <label>
-                    Image Url
-                    <input
-                        type="text"
-                        value={imageUrl}
-                        onChange={(e) => setImageUrl(e.target.value)}
-                    />
-                </label>
-                {/* <label>
-                    Album Id
-                    <input
-                        type="number"
-                        value={albumId}
-                        onChange={(e) => setAlbumId(e.target.value)}
-                    />
-                </label> */}
-                <button type="submit">Edit Song</button>
+                <input
+                    type="text"
+                    placeholder="Title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)} />
+                <input
+                    type="text"
+                    placeholder="Description"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)} />
+                <input
+                    type="text"
+                    placeholder="Url"
+                    value={url}
+                    onChange={(e) => setUrl(e.target.value)} />
+                <input
+                    type="text"
+                    placeholder="Image Url"
+                    value={imageUrl}
+                    onChange={(e) => setImageUrl(e.target.value)} />
+                <button type="submit">Create Song</button>
             </form>
         );
     }
