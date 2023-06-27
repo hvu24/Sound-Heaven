@@ -3,3 +3,17 @@
     flex-wrap: wrap;
     justify-content: center;
 }
+
+.my-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: -15px;
+  }
+
+  /* .my-grid > .col {
+    padding: 15px;
+    flex-basis: calc(33.33% - 30px);
+    max-width: calc(33.33% - 30px);
+    box-sizing: border-box;
+  } */
