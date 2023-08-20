@@ -57,16 +57,37 @@ const sessionReducer = (state = initialState, action) => {
 };
 
 export const signup = (user) => async (dispatch) => {
-    const { firstName, lastName, username, email, password } = user;
+    const { images, image, firstName, lastName, username, email, password } = user;
+    const formData = new FormData();
+    formData.append("firstName", firstName);
+    formData.append("lastName", lastName);
+    formData.append("username", username);
+    formData.append("email", email);
+    formData.append("password", password);
+
+    // for multiple files
+    if (images && images.length !== 0) {
+        for (var i = 0; i < images.length; i++) {
+            formData.append("images", images[i]);
+        }
+    }
+
+    // for single file
+    if (image) formData.append("image", image);
+
     const response = await csrfFetch("/api/users", {
         method: "POST",
-        body: JSON.stringify({
-            firstName,
-            lastName,
-            username,
-            email,
-            password,
-        }),
+        headers: {
+            "Content-Type": "multipart/form-data",
+        },
+        body: formData,
+        // body: JSON.stringify({
+        //     firstName,
+        //     lastName,
+        //     username,
+        //     email,
+        //     password,
+        // }),
     });
     const data = await response.json();
     dispatch(setUser(data));
