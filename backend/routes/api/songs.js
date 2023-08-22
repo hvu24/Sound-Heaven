@@ -3,7 +3,7 @@ const { requireAuth } = require('../../utils/auth');
 const { Song, Artist, Album, Comment, Playlist, User } = require('../../db/models');
 const { handleValidationErrors } = require('../../utils/validation');
 const { check } = require('express-validator');
-const { singleMulterUpload, singlePublicFileUpload } = require('../../awsS3')
+const { singleMulterUpload, singlePublicFileUpload, multipleMulterUpload, multiplePublicFileUpload } = require('../../awsS3')
 
 const router = express.Router();
 
@@ -21,12 +21,12 @@ const validateSong = [
     check('description')
         .exists({ checkFalsy: true })
         .withMessage('Description is required.'),
-    check('url')
-        .exists({ checkFalsy: true })
-        .withMessage('Audio url is required.'),
-    check('url')
-        .isURL()
-        .withMessage('Audio url must be in valid url format.'),
+    // check('url')
+    //     .exists({ checkFalsy: true })
+    //     .withMessage('Audio url is required.'),
+    // check('url')
+    //     .isURL()
+    //     .withMessage('Audio url must be in valid url format.'),
     // check('imageUrl')
     //     .exists({ checkFalsy: true })
     //     .withMessage('Image url is required.'),
@@ -99,11 +99,13 @@ router.put('/:songId', requireAuth, validateSong, async (req, res, next) => {
 //create song
 router.post('/',
     requireAuth,
-    singleMulterUpload("image"),
+    multipleMulterUpload("files"),
     validateSong,
     async (req, res, next) => {
         const { title, description, url, imageUrl, albumId } = req.body
-        const songImageUrl = await singlePublicFileUpload(req.file);
+        // const songAudioUrl = await singlePublicFileUpload(req.files[0])
+        // const songImageUrl = await singlePublicFileUpload(req.files[1])
+        const [songAudioUrl, songImageUrl] = await multiplePublicFileUpload(req.files)
         const { user } = req;
 
         if (albumId === "null") {
@@ -111,7 +113,7 @@ router.post('/',
                 artistId: user.id,
                 title,
                 description,
-                url,
+                url: songAudioUrl,
                 imageUrl: songImageUrl,
                 albumId: null
             })
@@ -131,8 +133,8 @@ router.post('/',
                         artistId: user.id,
                         title,
                         description,
-                        url,
-                        imageUrl,
+                        url: songAudioUrl,
+                        imageUrl: songImageUrl,
                         albumId
                     })
                     res.status(201)

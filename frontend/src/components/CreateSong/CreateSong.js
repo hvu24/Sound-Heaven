@@ -11,7 +11,7 @@ function CreateSong() {
     const sessionUser = useSelector((state) => state.session.user);
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
-    const [url, setUrl] = useState("");
+    const [audio, setAudio] = useState("");
     const [errors, setErrors] = useState([]);
     const [albumId, setAlbumId] = useState(null);
     const [image, setImage] = useState(null);
@@ -24,7 +24,7 @@ function CreateSong() {
             e.preventDefault();
             setErrors([]);
 
-            dispatch(createSong({ title, description, url, image, albumId }))
+            dispatch(createSong({ title, description, audio, image, albumId }))
                 .then(() => {
                     window.alert(`Song with the title of ${title} successfully created!`)
                     history.push(`/songs/current`)
@@ -100,11 +100,18 @@ function CreateSong() {
                     placeholder="Description"
                     value={description}
                     onChange={(e) => setDescription(e.target.value)} />
-                <input
+                {/* <input
                     type="text"
                     placeholder="Url"
                     value={url}
-                    onChange={(e) => setUrl(e.target.value)} />
+                    onChange={(e) => setUrl(e.target.value)} /> */}
+                <label>Image:
+                    <input type="file"
+                    name="audio" accept="audio/*"
+                        onChange={(e) => {
+                            setAudio(e.target.files[0]);
+                        }} />
+                </label>
                 {/* <input
                         type="file"
                         placeholder="Image Url"
@@ -112,9 +119,10 @@ function CreateSong() {
                         onChange={(e) => setImage(e.target.files[0])} /> */}
                 <label>Image:
                     <input type="file"
-                    onChange={(e) => {
-                        setImage(e.target.files[0]);
-                    }} />
+                    name="image" accept="image/*"
+                        onChange={(e) => {
+                            setImage(e.target.files[0]);
+                        }} />
                 </label>
                 <button type="submit">Create Song</button>
             </form>
