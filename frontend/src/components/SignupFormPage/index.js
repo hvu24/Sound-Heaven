@@ -84,7 +84,7 @@ function SignupFormPage() {
                 </label>
                 <button type="submit">Sign Up</button>
             </form>
-            <div>
+            {/* <div>
                 {sessionUser && (
                     <div>
                         <h1>{sessionUser.username}</h1>
@@ -95,7 +95,7 @@ function SignupFormPage() {
                         />
                     </div>
                 )}
-            </div>
+            </div> */}
         </div>
     );
 }

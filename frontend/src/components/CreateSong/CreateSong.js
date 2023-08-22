@@ -12,9 +12,9 @@ function CreateSong() {
     const [title, setTitle] = useState("");
     const [description, setDescription] = useState("");
     const [url, setUrl] = useState("");
-    const [imageUrl, setImageUrl] = useState("");
     const [errors, setErrors] = useState([]);
-    // const [albumId, setAlbumId] = useState(null);
+    const [albumId, setAlbumId] = useState(null);
+    const [image, setImage] = useState(null);
 
     if (!sessionUser.id) {
         return <Redirect to="/login" />
@@ -24,7 +24,7 @@ function CreateSong() {
             e.preventDefault();
             setErrors([]);
 
-            dispatch(createSong({ title, description, url, imageUrl }))
+            dispatch(createSong({ title, description, url, image, albumId }))
                 .then(() => {
                     window.alert(`Song with the title of ${title} successfully created!`)
                     history.push(`/songs/current`)
@@ -86,32 +86,38 @@ function CreateSong() {
             //     </label> */}
             //     <button type="submit">Create Song</button>
             // </form>
-                <form onSubmit={handleSubmit}>
-                    <ul>
-                        {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-                    </ul>
-                    <input
-                        type="text"
-                        placeholder="Title"
-                        value={title}
-                        onChange={(e) => setTitle(e.target.value)} />
-                    <input
-                        type="text"
-                        placeholder="Description"
-                        value={description}
-                        onChange={(e) => setDescription(e.target.value)} />
-                    <input
-                        type="text"
-                        placeholder="Url"
-                        value={url}
-                        onChange={(e) => setUrl(e.target.value)} />
-                    <input
-                        type="text"
+            <form onSubmit={handleSubmit}>
+                <ul>
+                    {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+                </ul>
+                <input
+                    type="text"
+                    placeholder="Title"
+                    value={title}
+                    onChange={(e) => setTitle(e.target.value)} />
+                <input
+                    type="text"
+                    placeholder="Description"
+                    value={description}
+                    onChange={(e) => setDescription(e.target.value)} />
+                <input
+                    type="text"
+                    placeholder="Url"
+                    value={url}
+                    onChange={(e) => setUrl(e.target.value)} />
+                {/* <input
+                        type="file"
                         placeholder="Image Url"
-                        value={imageUrl}
-                        onChange={(e) => setImageUrl(e.target.value)} />
-                    <button type="submit">Create Song</button>
-                </form>
+                        value={image}
+                        onChange={(e) => setImage(e.target.files[0])} /> */}
+                <label>Image:
+                    <input type="file"
+                    onChange={(e) => {
+                        setImage(e.target.files[0]);
+                    }} />
+                </label>
+                <button type="submit">Create Song</button>
+            </form>
         );
     }
 }
