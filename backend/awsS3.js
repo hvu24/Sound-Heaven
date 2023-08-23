@@ -11,6 +11,24 @@ const multer = require("multer");
 
 const s3 = new AWS.S3({ apiVersion: "2006-03-01" });
 
+async function deleteS3FileByUrl(url) {
+    try {
+        // Extract bucket name and object key from the URL
+        const urlParts = new URL(url);
+        const bucketName = urlParts.hostname.split('.')[0];
+        const objectKey = decodeURIComponent(urlParts.pathname.substring(1));
+
+        // Delete the object
+        await s3.deleteObject({
+            Bucket: bucketName,
+            Key: objectKey
+        }).promise();
+
+        console.log(`Object "${objectKey}" deleted successfully from "${bucketName}" bucket.`);
+    } catch (error) {
+        console.error('Error deleting S3 object:', error);
+    }
+}
 // --------------------------- Public UPLOAD ------------------------
 
 const singlePublicFileUpload = async (file) => {
@@ -97,4 +115,5 @@ module.exports = {
     retrievePrivateFile,
     singleMulterUpload,
     multipleMulterUpload,
+    deleteS3FileByUrl
 };

@@ -3,7 +3,7 @@ const { requireAuth } = require('../../utils/auth');
 const { Song, Artist, Album, Comment, Playlist, User } = require('../../db/models');
 const { handleValidationErrors } = require('../../utils/validation');
 const { check } = require('express-validator');
-const { singleMulterUpload, singlePublicFileUpload, multipleMulterUpload, multiplePublicFileUpload } = require('../../awsS3')
+const { singleMulterUpload, singlePublicFileUpload, multipleMulterUpload, multiplePublicFileUpload, deleteS3FileByUrl } = require('../../awsS3')
 
 const router = express.Router();
 
@@ -280,7 +280,9 @@ router.delete('/:songId', requireAuth, async (req, res, next) => {
             return next(err)
         } else {
             await Song.destroy({ where: { id: songId } });
-            return res.json({ message: 'Successfully deleted' });
+            deleteS3FileByUrl(song.url)
+            deleteS3FileByUrl(song.imageUrl)
+            return res.json({ message: 'Successfully deleted' + song.url });
         }
     } else {
         const err = new Error('Song not found.');
