@@ -1,5 +1,5 @@
 /* TODO Add site wide styles */
-:root {
+/* :root {
     background: linear-gradient(90deg,
             rgb(234, 155, 44) 0%,
             rgb(205, 50, 248) 100%);
@@ -7,6 +7,12 @@
     background-size: cover;
     width: 100vw;
     min-height: 100vh;
+} */
+
+body {
+    background: linear-gradient(90deg,
+            rgb(234, 155, 44) 0%,
+            rgb(205, 50, 248) 100%);
 }
 
 form {

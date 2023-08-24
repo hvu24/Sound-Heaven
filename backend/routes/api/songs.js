@@ -3,6 +3,7 @@ const { requireAuth } = require('../../utils/auth');
 const { Song, Artist, Album, Comment, Playlist, User } = require('../../db/models');
 const { handleValidationErrors } = require('../../utils/validation');
 const { check } = require('express-validator');
+const { singleMulterUpload, singlePublicFileUpload, multipleMulterUpload, multiplePublicFileUpload, deleteS3FileByUrl } = require('../../awsS3')
 
 const router = express.Router();
 
@@ -20,18 +21,18 @@ const validateSong = [
     check('description')
         .exists({ checkFalsy: true })
         .withMessage('Description is required.'),
-    check('url')
-        .exists({ checkFalsy: true })
-        .withMessage('Audio url is required.'),
-    check('url')
-        .isURL()
-        .withMessage('Audio url must be in valid url format.'),
-    check('imageUrl')
-        .exists({ checkFalsy: true })
-        .withMessage('Image url is required.'),
-    check('imageUrl')
-        .isURL()
-        .withMessage('Image Url must be in valid url format.'),
+    // check('url')
+    //     .exists({ checkFalsy: true })
+    //     .withMessage('Audio url is required.'),
+    // check('url')
+    //     .isURL()
+    //     .withMessage('Audio url must be in valid url format.'),
+    // check('imageUrl')
+    //     .exists({ checkFalsy: true })
+    //     .withMessage('Image url is required.'),
+    // check('imageUrl')
+    //     .isURL()
+    //     .withMessage('Image Url must be in valid url format.'),
     handleValidationErrors
 ];
 
@@ -96,52 +97,59 @@ router.put('/:songId', requireAuth, validateSong, async (req, res, next) => {
 })
 
 //create song
-router.post('/', requireAuth, validateSong, async (req, res, next) => {
-    const { title, description, url, imageUrl, albumId } = req.body
-    const { user } = req;
+router.post('/',
+    requireAuth,
+    multipleMulterUpload("files"),
+    validateSong,
+    async (req, res, next) => {
+        const { title, description, url, imageUrl, albumId } = req.body
+        // const songAudioUrl = await singlePublicFileUpload(req.files[0])
+        // const songImageUrl = await singlePublicFileUpload(req.files[1])
+        const [songAudioUrl, songImageUrl] = await multiplePublicFileUpload(req.files)
+        const { user } = req;
 
-    if (albumId === null) {
-        const song = await Song.create({
-            artistId: user.id,
-            title,
-            description,
-            url,
-            imageUrl,
-            albumId
-        })
-        res.status(201)
-        return res.json(song)
-    } else {
-        const album = await Album.findByPk(albumId)
-        if (album) {
-            if (album.artistId !== user.id) {
-                const err = new Error('User not authorized to edit album.');
-                err.status = 403;
-                err.title = 'User not authorized to edit album.';
-                err.errors = ['User not authorized to edit album.'];
-                return next(err)
-            } else {
-                const song = await Song.create({
-                    artistId: user.id,
-                    title,
-                    description,
-                    url,
-                    imageUrl,
-                    albumId
-                })
-                res.status(201)
-                return res.json(song)
-            }
+        if (albumId === "null") {
+            const song = await Song.create({
+                artistId: user.id,
+                title,
+                description,
+                url: songAudioUrl,
+                imageUrl: songImageUrl,
+                albumId: null
+            })
+            res.status(201)
+            return res.json(song)
         } else {
-            const err = new Error("Album couldn't be found.");
-            err.status = 404;
-            err.title = "Album couldn't be found.";
-            err.errors = ["Album couldn't be found."];
-            return next(err)
+            const album = await Album.findByPk(albumId)
+            if (album) {
+                if (album.artistId !== user.id) {
+                    const err = new Error('User not authorized to edit album.');
+                    err.status = 403;
+                    err.title = 'User not authorized to edit album.';
+                    err.errors = ['User not authorized to edit album.'];
+                    return next(err)
+                } else {
+                    const song = await Song.create({
+                        artistId: user.id,
+                        title,
+                        description,
+                        url: songAudioUrl,
+                        imageUrl: songImageUrl,
+                        albumId
+                    })
+                    res.status(201)
+                    return res.json(song)
+                }
+            } else {
+                const err = new Error("Album couldn't be found.");
+                err.status = 404;
+                err.title = "Album couldn't be found.";
+                err.errors = ["Album couldn't be found."];
+                return next(err)
+            }
         }
-    }
 
-})
+    })
 
 //create comment
 router.post('/:songId/comments', requireAuth, validateComment, async (req, res, next) => {
@@ -272,7 +280,9 @@ router.delete('/:songId', requireAuth, async (req, res, next) => {
             return next(err)
         } else {
             await Song.destroy({ where: { id: songId } });
-            return res.json({ message: 'Successfully deleted' });
+            deleteS3FileByUrl(song.url)
+            deleteS3FileByUrl(song.imageUrl)
+            return res.json({ message: 'Successfully deleted' + song.url });
         }
     } else {
         const err = new Error('Song not found.');

@@ -7,6 +7,8 @@ const { Song, Artist, Album, Comment, Playlist, User } = require('../../db/model
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
 
+const {singleMulterUpload, singlePublicFileUpload} = require('../../awsS3')
+
 const router = express.Router();
 
 
@@ -41,9 +43,11 @@ const validateSignup = [
 // Sign up
 router.post(
     '/',
+    singleMulterUpload("image"),
     validateSignup,
     async (req, res, next) => {
         const { email, password, username, firstName, lastName } = req.body;
+        const profileImageUrl = await singlePublicFileUpload(req.file);
         let existingUser = await User.findOne({ where: { email } })
 
         if (existingUser) {
@@ -60,7 +64,7 @@ router.post(
         await Artist.create({
             totalSongs: 0,
             totalAlbums: 0,
-            imageUrl: "www.xyz.com",
+            imageUrl: profileImageUrl,
             userId: user.dataValues.id,
         })
 

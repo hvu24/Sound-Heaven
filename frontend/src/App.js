@@ -13,6 +13,7 @@ import DeleteSong from "./components/DeleteSong/DeleteSong";
 import EditSong from "./components/EditSong/EditSong";
 import SongDetails from "./components/SongDetails/SongDetails";
 import DeleteComment from "./components/DeleteComment/DeleteComment";
+import 'bootstrap/dist/css/bootstrap.min.css';
 
 function App() {
   const dispatch = useDispatch();
