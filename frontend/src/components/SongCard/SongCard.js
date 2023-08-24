@@ -6,12 +6,20 @@ import { songDetails } from '../../store/songDetailsReducer';
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import { Container, Row, Col, ButtonGroup } from 'react-bootstrap';
+import PlayButtonImage from './PlayButtonImage';
 
 const SongCard = ({ song, songId }) => {
     const sessionUser = useSelector((state) => state.session.user);
     const dispatch = useDispatch();
     const songDetail = useSelector(state => state.songDetailsReducer[songId])
     const [artist, setArtist] = useState({})
+
+    const [isPlaying, setIsPlaying] = useState(false);
+
+    const handlePlayPause = () => {
+        setIsPlaying(!isPlaying);
+    };
+
 
     useEffect(() => {
         if (!songDetail) {
@@ -48,13 +56,11 @@ const SongCard = ({ song, songId }) => {
         //     </div>
         // </div>
         <Card style={{ width: '18rem' }}>
-            <Card.Img variant="top" src="https://images.unsplash.com/photo-1501594907352-04cda38ebc29?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxleHBsb3JlLWZlZWR8MXx8fGVufDB8fHx8&w=1000&q=80" />
+            {/* <Card.Img variant="top" src={song.imageUrl} /> */}
+            <PlayButtonImage imageUrl={song.imageUrl} songUrl={song.url} />
             <Card.Body>
-                <Card.Title>Card Title</Card.Title>
-                <Card.Text>
-                    Some quick example text to build on the card title and make up the
-                    bulk of the card's content.
-                </Card.Text>
+                <Card.Title>{song.title}</Card.Title>
+                <Card.Text>{song.description}</Card.Text>
             </Card.Body>
             <ButtonGroup className="d-flex justify-content-center">
                 {(sessionUser.id && song.artistId === sessionUser.id) && <NavLink to={`/songs/${song.id}/delete`}>

@@ -1,0 +1,39 @@
+.play-button-image-container {
+    position: relative;
+    display: inline-block;
+}
+
+.background-image {
+    max-width: 100%;
+    height: auto;
+}
+
+.play-button-overlay {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    cursor: pointer;
+}
+
+.play-button-icon {
+    width: 60px;
+    height: 60px;
+    background-color: rgba(0, 0, 0, 0.4);
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    font-size: 24px;
+    color: white;
+}
+
+.play-button-icon.play::before {
+    content: "\25B6";
+    color: grey;
+}
+
+.play-button-icon.pause::before {
+    content: "\II";
+}
