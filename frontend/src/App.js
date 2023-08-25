@@ -14,6 +14,8 @@ import EditSong from "./components/EditSong/EditSong";
 import SongDetails from "./components/SongDetails/SongDetails";
 import DeleteComment from "./components/DeleteComment/DeleteComment";
 import 'bootstrap/dist/css/bootstrap.min.css';
+import Footer from "./components/Footer/Footer";
+import "./App.css";
 
 function App() {
   const dispatch = useDispatch();
@@ -24,41 +26,46 @@ function App() {
 
   return (
     <>
-      <Navigation isLoaded={isLoaded} />
-      {isLoaded && (
-        <Switch>
-          <Route exact path="/">
-            <Redirect to='/songs' />
-          </Route>
-          <Route path="/login">
-            <LoginFormPage />
-          </Route>
-          <Route path="/signup">
-            <SignupFormPage />
-          </Route>
-          <Route path='/songs/:songId/comments/:commentId/delete'>
-            <DeleteComment />
-          </Route>
-          <Route path='/songs/:songId/delete'>
-            <DeleteSong />
-          </Route>
-          <Route path='/songs/:songId/edit'>
-            <EditSong />
-          </Route>
-          <Route path='/songs/:songId/details'>
-            <SongDetails />
-          </Route>
-          <Route path='/songs/current'>
-            <UserSongList />
-          </Route>
-          <Route path='/songs/create'>
-            <CreateSong />
-          </Route>
-          <Route exact path='/songs'>
-            <SongList />
-          </Route>
-        </Switch>
-      )}
+      <div className="app-container">
+        <Navigation isLoaded={isLoaded} />
+        <div className="content-container">
+          {isLoaded && (
+            <Switch>
+              <Route exact path="/">
+                <Redirect to='/songs' />
+              </Route>
+              <Route path="/login">
+                <LoginFormPage />
+              </Route>
+              <Route path="/signup">
+                <SignupFormPage />
+              </Route>
+              <Route path='/songs/:songId/comments/:commentId/delete'>
+                <DeleteComment />
+              </Route>
+              <Route path='/songs/:songId/delete'>
+                <DeleteSong />
+              </Route>
+              <Route path='/songs/:songId/edit'>
+                <EditSong />
+              </Route>
+              <Route path='/songs/:songId/details'>
+                <SongDetails />
+              </Route>
+              <Route path='/songs/current'>
+                <UserSongList />
+              </Route>
+              <Route path='/songs/create'>
+                <CreateSong />
+              </Route>
+              <Route exact path='/songs'>
+                <SongList />
+              </Route>
+            </Switch>
+          )}
+        </div>
+        <Footer />
+      </div>
     </>
   );
 }

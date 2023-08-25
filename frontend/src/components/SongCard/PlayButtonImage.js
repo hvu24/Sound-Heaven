@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import './PlayButtonImage.css'
+import React, { useState, useRef } from 'react';
+import './PlayButtonImage.css';
 
 const PlayButtonImage = ({ imageUrl, songUrl }) => {
     const [isPlaying, setIsPlaying] = useState(false);
-    const audioRef = React.createRef();
+    const audioRef = useRef(null);
 
     const togglePlay = () => {
         const audioElement = audioRef.current;
@@ -28,4 +28,17 @@ const PlayButtonImage = ({ imageUrl, songUrl }) => {
     );
 };
 
+const MusicControls = ({ isPlaying, onTogglePlay }) => {
+    return (
+        <div className="music-controls">
+            <button onClick={onTogglePlay}>
+                {isPlaying ? 'Pause' : 'Play'}
+            </button>
+            <input type="range" />
+            {/* Add other music controls as needed */}
+        </div>
+    );
+};
+
 export default PlayButtonImage;
+export { MusicControls };
