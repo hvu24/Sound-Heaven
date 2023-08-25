@@ -27,6 +27,13 @@
     cursor: pointer;
     font-size: 24px;
     color: white;
+    transition: all 0.1s ease;
+}
+
+.play-button-icon:hover {
+    width: 70px;
+    height: 70px;
+    font-size: 28px;
 }
 
 .play-button-icon.play::before {
