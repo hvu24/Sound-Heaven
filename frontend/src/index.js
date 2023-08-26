@@ -8,6 +8,7 @@ import configureStore from './store';
 import { restoreCSRF, csrfFetch } from './store/csrf';
 import * as sessionActions from './store/session';
 import Favicon from 'react-favicon'
+import { MusicPlayerProvider } from './components/MusicPlayerContext/MusicPlayerContext';
 
 const store = configureStore();
 
@@ -23,7 +24,9 @@ function Root() {
   return (
     <Provider store={store}>
       <BrowserRouter>
-        <App />
+        <MusicPlayerProvider>
+          <App />
+        </MusicPlayerProvider>
       </BrowserRouter>
     </Provider>
   );
