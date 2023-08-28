@@ -7,6 +7,7 @@ export const useMusicPlayer = () => useContext(MusicPlayerContext);
 export const MusicPlayerProvider = ({ children }) => {
     const audioRef = useRef(null);
     const [currentSong, setCurrentSong] = useState(null);
+    const [songTitle, setSongTitle] = useState(null);
 
     const playSong = (songUrl) => {
         if (audioRef.current) {
@@ -25,7 +26,7 @@ export const MusicPlayerProvider = ({ children }) => {
     };
 
     return (
-        <MusicPlayerContext.Provider value={{ playSong, pauseSong, currentSong }}>
+        <MusicPlayerContext.Provider value={{ playSong, pauseSong, currentSong, setCurrentSong, setSongTitle, songTitle }}>
             {children}
         </MusicPlayerContext.Provider>
     );

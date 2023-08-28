@@ -14,13 +14,6 @@ const SongCard = ({ song, songId }) => {
     const songDetail = useSelector(state => state.songDetailsReducer[songId])
     const [artist, setArtist] = useState({})
 
-    const [isPlaying, setIsPlaying] = useState(false);
-
-    const handlePlayPause = () => {
-        setIsPlaying(!isPlaying);
-    };
-
-
     useEffect(() => {
         if (!songDetail) {
             dispatch(songDetails(songId))
@@ -30,34 +23,8 @@ const SongCard = ({ song, songId }) => {
     }, [dispatch, songId, songDetail])
 
     return (
-        // <div className='song-card'>
-        //     {/* <div>Song Id: {song.id}</div>
-        //     <div>Artist Id: {song.artistId}</div> */}
-        //     <div>Artist Name: {artist.username}</div>
-        //     <div>Title: {song.title}</div>
-        //     <div>Description: {song.description}</div>
-        //     {/* <div>Url: {song.url}</div>
-        //     <div>Image Url: {song.imageUrl}</div> */}
-        //     <NavLink to={`/songs/${song.id}/details`}>Song Details</NavLink>
-        //     {(sessionUser.id && song.artistId === sessionUser.id) && <NavLink to={`/songs/${song.id}/delete`}>Delete Song</NavLink>}
-        //     {(sessionUser.id && song.artistId === sessionUser.id) && <NavLink to={`/songs/${song.id}/edit`}>Edit Song</NavLink>}
-        // </div>
-        // <div class="card">
-        //     <div class="card-header">
-        //         Featured
-        //     </div>
-        //     <div class="card-body">
-        //         <h5 class="card-title">Special title treatment</h5>
-        //         <p class="card-text">With supporting text below as a natural lead-in to additional content.</p>
-        //         <a href="#" class="btn btn-primary">Go somewhere</a>
-        //     </div>
-        //     <div class="card-footer text-muted">
-        //         2 days ago
-        //     </div>
-        // </div>
         <Card style={{ width: '18rem' }}>
-            {/* <Card.Img variant="top" src={song.imageUrl} /> */}
-            <PlayButtonImage imageUrl={song.imageUrl} songUrl={song.url} />
+            <PlayButtonImage imageUrl={song.imageUrl} songUrl={song.url} songTitle={song.title} />
             <Card.Body>
                 <Card.Title>{song.title}</Card.Title>
                 <Card.Text>{song.description}</Card.Text>
