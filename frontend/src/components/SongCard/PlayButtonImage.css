@@ -16,7 +16,7 @@
     cursor: pointer;
 }
 
-.play-button-icon {
+.play-button-icon.play {
     width: 60px;
     height: 60px;
     background-color: rgba(0, 0, 0, 0.4);
@@ -37,10 +37,11 @@
 }
 
 .play-button-icon.play::before {
-    content: "\25B6";
-    color: grey;
+    content: "\27A4";
+    color: rgb(255, 255, 255, 0.4);
 }
 
 .play-button-icon.pause::before {
-    content: "\II";
+    content: "\f001";
+    color: rgb(255, 255, 255, 0.4);
 }
