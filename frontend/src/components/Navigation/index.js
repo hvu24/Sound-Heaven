@@ -4,6 +4,9 @@ import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
 import ProfileButton from './ProfileButton';
 import './Navigation.css';
+import Nav from 'react-bootstrap/Nav';
+import Navbar from 'react-bootstrap/Navbar';
+import Container from 'react-bootstrap/Container';
 
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user);
@@ -17,7 +20,7 @@ function Navigation({ isLoaded }) {
                 <NavLink to="/songs/current">My Songs</NavLink>
                 <NavLink to="/songs/create">Create Song</NavLink>
                 <NavLink to="/songs">All Songs</NavLink>
-                <a href="https://www.linkedin.com/in/hung-v-67a490214/">LinkedIn</a>
+                <a href="https://www.linkedin.com/in/anthony-v-67a490214/">LinkedIn</a>
                 <a href="https://github.com/hvu24">GitHub</a>
             </>
         );
@@ -37,9 +40,11 @@ function Navigation({ isLoaded }) {
     return (
         <ul>
             {(sessionUser.id && isLoaded) && <ProfileButton user={sessionUser} />}
-            <nav>
-                {isLoaded && sessionLinks}
-            </nav>
+            <Navbar expand="lg" className="bg-body-tertiary">
+                <Container>
+                    {isLoaded && sessionLinks}
+                </Container>
+            </Navbar>
         </ul>
     );
 }
