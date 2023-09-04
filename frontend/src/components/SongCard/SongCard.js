@@ -23,7 +23,7 @@ const SongCard = ({ song, songId }) => {
     }, [dispatch, songId, songDetail])
 
     return (
-        <Card style={{ width: '18rem' }}>
+        <Card style={{ width: '25rem' }}>
             <PlayButtonImage imageUrl={song.imageUrl} songUrl={song.url} songTitle={song.title} />
             <Card.Body>
                 <Card.Title>{song.title}</Card.Title>
@@ -34,6 +34,8 @@ const SongCard = ({ song, songId }) => {
                     <Button variant="danger" style={{}}>Delete Song</Button></NavLink>}
                 {(sessionUser.id && song.artistId === sessionUser.id) && <NavLink to={`/songs/${song.id}/edit`}>
                     <Button variant="warning">Edit Song</Button></NavLink>}
+                <NavLink to={`/songs/${song.id}/details`}>
+                    <Button variant="primary">Details</Button></NavLink>
             </ButtonGroup>
         </Card>
     )
