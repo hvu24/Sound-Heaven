@@ -16,6 +16,7 @@ import DeleteComment from "./components/DeleteComment/DeleteComment";
 import 'bootstrap/dist/css/bootstrap.min.css';
 import Footer from "./components/Footer/Footer";
 import "./App.css";
+import UserPlaylistsList from "./components/UserPlaylistsList/UserPlaylistsList";
 
 function App() {
   const dispatch = useDispatch();
@@ -60,6 +61,9 @@ function App() {
               </Route>
               <Route exact path='/songs'>
                 <SongList />
+              </Route>
+              <Route path='/playlists/current'>
+                <UserPlaylistsList />
               </Route>
             </Switch>
           )}

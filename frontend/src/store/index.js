@@ -6,13 +6,15 @@ import songReducer from './songsReducer';
 import userSongReducer from './userSongsReducer'
 import songDetailsReducer from './songDetailsReducer';
 import commentsReducer from './commentsReducer'
+import userPlaylistReducer from './userPlaylistsReducer';
 
 const rootReducer = combineReducers({
     session: sessionReducer,
     songReducer,
     userSongReducer,
     songDetailsReducer,
-    commentsReducer
+    commentsReducer,
+    userPlaylistReducer
 });
 
 let enhancer;

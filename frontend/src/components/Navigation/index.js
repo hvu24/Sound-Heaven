@@ -17,6 +17,7 @@ function Navigation({ isLoaded }) {
         sessionLinks = (
             <>
                 <NavLink exact to="/">Home</NavLink>
+                <NavLink to="/playlists/current">My Playlists</NavLink>
                 <NavLink to="/songs/current">My Songs</NavLink>
                 <NavLink to="/songs/create">Create Song</NavLink>
                 <NavLink to="/songs">All Songs</NavLink>
