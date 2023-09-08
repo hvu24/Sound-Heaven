@@ -2,7 +2,6 @@ import './PlaylistCard.css'
 import { useSelector, useDispatch } from "react-redux";
 import { NavLink } from 'react-router-dom';
 import React, { useState, useEffect } from "react";
-import { songDetails } from '../../store/songDetailsReducer';
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
 import { Container, Row, Col, ButtonGroup } from 'react-bootstrap';
@@ -20,6 +19,10 @@ const PlaylistCard = ({ playlist, playlistId }) => {
                 <Card.Text>Playlist ID: {playlist.id}</Card.Text>
                 <Card.Text>Playlist User ID: {playlist.userId}</Card.Text>
             </Card.Body>
+            <ButtonGroup className="d-flex justify-content-center">
+                <NavLink to={`/playlists/${playlistId}/details`}>
+                    <Button variant="primary">Details</Button></NavLink>
+            </ButtonGroup>
         </Card>
     )
 }

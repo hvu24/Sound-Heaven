@@ -17,7 +17,7 @@ import 'bootstrap/dist/css/bootstrap.min.css';
 import Footer from "./components/Footer/Footer";
 import "./App.css";
 import UserPlaylistsList from "./components/UserPlaylistsList/UserPlaylistsList";
-
+import PlaylistDetails from "./components/PlaylistDetails/PlaylistDetails";
 function App() {
   const dispatch = useDispatch();
   const [isLoaded, setIsLoaded] = useState(false);
@@ -64,6 +64,9 @@ function App() {
               </Route>
               <Route path='/playlists/current'>
                 <UserPlaylistsList />
+              </Route>
+              <Route path='/playlists/:playlistId/details'>
+                <PlaylistDetails />
               </Route>
             </Switch>
           )}
