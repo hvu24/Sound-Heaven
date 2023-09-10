@@ -5,38 +5,44 @@ import 'react-h5-audio-player/lib/styles.css';
 import { useMusicPlayer } from '../MusicPlayerContext/MusicPlayerContext';
 
 const Footer = () => {
-    const { myplaylist, currentTrack, setTrackIndex } = useMusicPlayer();
+    const { songTitle,
+        setSongTitle,
+        myplaylist,
+        trackIndex,
+        setTrackIndex,
+        setCurrentSong,
+        currentSong
+    } = useMusicPlayer();
 
     const handleClickNext = () => {
-        console.log('click next')
-        console.log('logging playlist from footer'+JSON.stringify(myplaylist))
-        setTrackIndex((currentTrack) =>
-            currentTrack < myplaylist.length - 1 ? currentTrack + 1 : 0
-        );
+        const nextTrack = trackIndex < myplaylist.length - 1 ? trackIndex + 1 : 0
+        setTrackIndex(nextTrack);
+        setCurrentSong(myplaylist[nextTrack].url)
+        setSongTitle(myplaylist[nextTrack].title)
     };
 
     const handleClickPrevious = () => {
-        console.log('click previous')
-        setTrackIndex((currentTrack) =>
-            currentTrack > 0 ? currentTrack - 1 : myplaylist.length - 1
-        );
+        const prevTrack = trackIndex > 0 ? trackIndex - 1 : myplaylist.length - 1
+        setTrackIndex(prevTrack);
+        setCurrentSong(myplaylist[prevTrack].url)
+        setSongTitle(myplaylist[prevTrack].title)
     };
 
     const handleEnd = () => {
-        console.log('end')
-        setTrackIndex((currentTrack) =>
-            currentTrack < myplaylist.length - 1 ? currentTrack + 1 : 0
-        );
+        const nextTrack = trackIndex < myplaylist.length - 1 ? trackIndex + 1 : 0
+        setTrackIndex(nextTrack);
+        setCurrentSong(myplaylist[nextTrack].url)
+        setSongTitle(myplaylist[nextTrack].title)
     }
 
     return (
         <div className="footer">
             <AudioPlayer
-                autoPlay
-                src={myplaylist[currentTrack]?.url}
+                autoPlay={false}
+                src={currentSong}
                 onPlay={e => console.log("onPlay")}
                 showSkipControls={true}
-                header={myplaylist[currentTrack]?.title}
+                header={songTitle}
                 onClickPrevious={handleClickPrevious}
                 onClickNext={handleClickNext}
                 onEnded={handleEnd}
