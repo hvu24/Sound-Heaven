@@ -2,8 +2,8 @@ import React, { useState, useRef, useContext } from 'react';
 import './PlayButtonImage.css';
 import { useMusicPlayer } from '../MusicPlayerContext/MusicPlayerContext';
 
-const PlayButtonImage = ({ imageUrl, songUrl, songTitle }) => {
-    const { pauseSong, currentSong, playSong, setCurrentSong, setSongTitle } = useMusicPlayer();
+const PlayButtonImage = ({ imageUrl, songUrl, songTitle, index }) => {
+    const { pauseSong, currentSong, playSong, setCurrentSong, setSongTitle, currentTrack, setTrackIndex } = useMusicPlayer();
 
     const isPlaying = songUrl === currentSong;
 
@@ -17,6 +17,7 @@ const PlayButtonImage = ({ imageUrl, songUrl, songTitle }) => {
     const togglePlay = () => {
         if (!isPlaying) {
             setCurrentSong(songUrl);
+            setTrackIndex(index)
             setSongTitle(songTitle)
         }
     };
