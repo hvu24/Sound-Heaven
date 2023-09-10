@@ -1,5 +1,5 @@
-# `<SoundCloud Clone>`
-SoundCloud Clone is my first attempt at creating a working website hosted on the web that allows users to play and host music online.
+# `<Sound Heaven>`
+Sound Heaven is my first attempt at creating a working website hosted on the web that allows users to play and host music online.
 
 ### Screenshots
 ##### Song Detail
