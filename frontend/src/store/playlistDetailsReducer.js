@@ -8,7 +8,6 @@ export const loadPlaylistDetails = (playlist) => {
 }
 
 export const playlistDetails = (playlistId) => async (dispatch) => {
-    console.log(playlistId)
     const response = await csrfFetch(`/api/playlists/${playlistId}`);
     if (response.ok) {
         const playlistObj = await response.json();

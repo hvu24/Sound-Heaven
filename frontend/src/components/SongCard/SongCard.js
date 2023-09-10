@@ -8,7 +8,7 @@ import Button from 'react-bootstrap/Button'
 import { Container, Row, Col, ButtonGroup } from 'react-bootstrap';
 import PlayButtonImage from './PlayButtonImage';
 
-const SongCard = ({ song, songId }) => {
+const SongCard = ({ song, songId, index }) => {
     const sessionUser = useSelector((state) => state.session.user);
     const dispatch = useDispatch();
     const songDetail = useSelector(state => state.songDetailsReducer[songId])
@@ -24,7 +24,7 @@ const SongCard = ({ song, songId }) => {
 
     return (
         <Card style={{ width: '25rem' }}>
-            <PlayButtonImage imageUrl={song.imageUrl} songUrl={song.url} songTitle={song.title} />
+            <PlayButtonImage imageUrl={song.imageUrl} songUrl={song.url} songTitle={song.title} index={index} />
             <Card.Body>
                 <Card.Title>{song.title}</Card.Title>
                 <Card.Text>{song.description}</Card.Text>
