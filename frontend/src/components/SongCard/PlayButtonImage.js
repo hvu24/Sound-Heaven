@@ -2,23 +2,16 @@ import React, { useState, useRef, useContext } from 'react';
 import './PlayButtonImage.css';
 import { useMusicPlayer } from '../MusicPlayerContext/MusicPlayerContext';
 
-const PlayButtonImage = ({ imageUrl, songUrl, songTitle, index }) => {
-    const { pauseSong, currentSong, playSong, setCurrentSong, setSongTitle, currentTrack, setTrackIndex } = useMusicPlayer();
+const PlayButtonImage = ({ imageUrl, songUrl, index, songTitle }) => {
+    const { setSongTitle, currentSong, setCurrentSong, setTrackIndex } = useMusicPlayer();
 
     const isPlaying = songUrl === currentSong;
 
-    // const togglePlay = () => {
-    //     if (!isPlaying) {
-    //         playSong(songUrl);
-    //     } else {
-    //         pauseSong();
-    //     }
-    // };
     const togglePlay = () => {
         if (!isPlaying) {
+            setSongTitle(songTitle)
             setCurrentSong(songUrl);
             setTrackIndex(index)
-            setSongTitle(songTitle)
         }
     };
 

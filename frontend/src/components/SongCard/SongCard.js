@@ -12,13 +12,10 @@ const SongCard = ({ song, songId, index }) => {
     const sessionUser = useSelector((state) => state.session.user);
     const dispatch = useDispatch();
     const songDetail = useSelector(state => state.songDetailsReducer[songId])
-    const [artist, setArtist] = useState({})
 
     useEffect(() => {
         if (!songDetail) {
             dispatch(songDetails(songId))
-        } else {
-            setArtist(songDetail.Artist)
         }
     }, [dispatch, songId, songDetail])
 

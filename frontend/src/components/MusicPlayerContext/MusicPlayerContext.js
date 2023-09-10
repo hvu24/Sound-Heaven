@@ -5,38 +5,22 @@ const MusicPlayerContext = createContext();
 export const useMusicPlayer = () => useContext(MusicPlayerContext);
 
 export const MusicPlayerProvider = ({ children }) => {
-    // const audioRef = useRef(null);
+
     const [currentSong, setCurrentSong] = useState(null);
-    const [currentTrack, setTrackIndex] = useState(0)
-    const [songTitle, setSongTitle] = useState(null);
+    const [trackIndex, setTrackIndex] = useState(0)
     const [myplaylist, setPlaylist] = useState([])
-
-    // const playSong = (songUrl) => {
-    //     if (audioRef.current) {
-    //         audioRef.current.pause();
-    //     }
-    //     audioRef.current = new Audio(songUrl);
-    //     audioRef.current.play();
-    //     setCurrentSong(songUrl);
-    // };
-
-    // const pauseSong = () => {
-    //     if (audioRef.current) {
-    //         audioRef.current.pause();
-    //         setCurrentSong(null);
-    //     }
-    // };
+    const [songTitle, setSongTitle] = useState('')
 
     return (
         <MusicPlayerContext.Provider value={{
-            currentTrack,
+            trackIndex,
             setTrackIndex,
             currentSong,
             setCurrentSong,
-            setSongTitle,
-            songTitle,
             myplaylist,
-            setPlaylist
+            setPlaylist,
+            songTitle,
+            setSongTitle
         }}>
             {children}
         </MusicPlayerContext.Provider>
