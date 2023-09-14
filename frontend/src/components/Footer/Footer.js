@@ -40,6 +40,7 @@ const Footer = () => {
             <AudioPlayer
                 autoPlay={false}
                 src={currentSong}
+                customAdditionalControls={[]}
                 onPlay={e => console.log("onPlay")}
                 showSkipControls={true}
                 header={songTitle}

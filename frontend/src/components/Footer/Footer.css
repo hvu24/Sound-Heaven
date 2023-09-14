@@ -6,4 +6,9 @@
     position: fixed;
     bottom: 0;
     width: 100%;
+    background-color: black;
+}
+
+.rhap_container {
+    background-color: blueviolet;
 }
