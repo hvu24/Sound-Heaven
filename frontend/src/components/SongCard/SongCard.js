@@ -45,7 +45,7 @@ const SongCard = ({ song, songId, index }) => {
                 <Card.Title>{song.title}</Card.Title>
                 <Card.Text>{song.description}</Card.Text>
             </Card.Body>
-            <Dropdown as={ButtonGroup}>
+            {(sessionUser.id && song.artistId === sessionUser.id) && <Dropdown as={ButtonGroup}>
                 <Button variant="success">Add Song to Playlist</Button>
                 <Dropdown.Toggle split variant="success" id="dropdown-split-basic" />
                 <Dropdown.Menu>
@@ -55,7 +55,7 @@ const SongCard = ({ song, songId, index }) => {
                         )
                     })}
                 </Dropdown.Menu>
-            </Dropdown>
+            </Dropdown>}
             <ButtonGroup className="d-flex justify-content-center">
                 {(sessionUser.id && song.artistId === sessionUser.id) && <NavLink to={`/songs/${song.id}/delete`}>
                     <Button variant="danger" style={{}}>Delete Song</Button></NavLink>}
