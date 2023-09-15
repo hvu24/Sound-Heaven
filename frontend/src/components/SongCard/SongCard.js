@@ -45,7 +45,7 @@ const SongCard = ({ song, songId, index }) => {
                 <Card.Title>{song.title}</Card.Title>
                 <Card.Text>{song.description}</Card.Text>
             </Card.Body>
-            {(sessionUser.id && song.artistId === sessionUser.id) && <Dropdown as={ButtonGroup}>
+            {(sessionUser.id) && <Dropdown as={ButtonGroup}>
                 <Button variant="success">Add Song to Playlist</Button>
                 <Dropdown.Toggle split variant="success" id="dropdown-split-basic" />
                 <Dropdown.Menu>
