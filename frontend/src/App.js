@@ -6,6 +6,7 @@ import LoginFormPage from "./components/LoginFormPage";
 import SignupFormPage from "./components/SignupFormPage";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
+import HomePage from "./components/HomePage/HomePage";
 import SongList from "./components/SongList/SongList";
 import UserSongList from "./components/UserSongList/UserSongList";
 import CreateSong from "./components/CreateSong/CreateSong";
@@ -33,7 +34,7 @@ function App() {
           {isLoaded && (
             <Switch>
               <Route exact path="/">
-                <Redirect to='/songs' />
+                <HomePage />
               </Route>
               <Route path="/login">
                 <LoginFormPage />
