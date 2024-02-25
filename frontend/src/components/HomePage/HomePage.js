@@ -29,15 +29,19 @@ const HomePage = () => {
     return (
         <div>
             <Container>
-                <Carousel>
-                    {songsArr.map((song, index) => {
-                        return (
-                            <Carousel.Item key={song.id}>
-                                <SongCard className='col' song={song} songId={song.id} index={index}></SongCard>
-                            </Carousel.Item>
-                        )
-                    })}
-                </Carousel>
+
+                    <Carousel>
+                        {songsArr.map((song, index) => {
+                            return (
+                                <Carousel.Item key={song.id}>
+                                    <div className="carousel-item-center">
+                                        <SongCard className='col' song={song} songId={song.id} index={index}></SongCard>
+                                    </div>
+                                </Carousel.Item>
+                            )
+                        })}
+                    </Carousel>
+                
                 {/* <Row className="my-grid">
                     {songsArr.map((song, index) => {
                         return (

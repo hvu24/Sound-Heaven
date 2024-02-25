@@ -17,3 +17,9 @@
     max-width: calc(33.33% - 30px);
     box-sizing: border-box;
   } */
+  .carousel-item-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 100%;
+}
