@@ -119,7 +119,7 @@ router.get('/:playlistId', async (req, res, next) => {
             model: Song,
             as: 'Songs',
             through: { //through with empty attributes array excludes the SongPlaylist object
-                attributes: [] //add attributes to array to include properties from SongPlaylist object
+                attributes: ['id'] //add attributes to array to include properties from SongPlaylist object
             },
         }
     })
