@@ -4,8 +4,10 @@ import { useDispatch, useSelector } from 'react-redux'
 import { loadAllSongs } from '../../store/songsReducer'
 import SongCard from '../SongCard/SongCard'
 import { Button } from 'react-bootstrap'
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap'
 import { useMusicPlayer } from '../MusicPlayerContext/MusicPlayerContext'
+import Carousel from 'react-bootstrap/Carousel'
+// import ExampleCarouselImage from 'components/ExampleCarouselImage'
 
 
 const HomePage = () => {
@@ -22,19 +24,27 @@ const HomePage = () => {
         if (JSON.stringify(myplaylist) !== JSON.stringify(songsArr)) {
             setPlaylist(songsArr);
         }
-    }, [songsArr, myplaylist, setPlaylist]);
+    }, [songsArr, myplaylist, setPlaylist])
 
     return (
         <div>
-            <h1>All Songs</h1>
             <Container>
-                <Row className="my-grid">
+                <Carousel>
+                    {songsArr.map((song, index) => {
+                        return (
+                            <Carousel.Item key={song.id}>
+                                <SongCard className='col' song={song} songId={song.id} index={index}></SongCard>
+                            </Carousel.Item>
+                        )
+                    })}
+                </Carousel>
+                {/* <Row className="my-grid">
                     {songsArr.map((song, index) => {
                         return (
                             <SongCard className='col' key={song.id} song={song} songId={song.id} index={index}></SongCard>
                         )
                     })}
-                </Row>
+                </Row> */}
             </Container>
         </div>
     )
