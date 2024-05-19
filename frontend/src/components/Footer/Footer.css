@@ -1,14 +1,36 @@
-.footer {
-    /* background-color: #333;
-    color: white;
-    text-align: center;
-    padding: 10px; */
+.footer-container {
     position: fixed;
     bottom: 0;
     width: 100%;
-    background-color: black;
 }
 
-.rhap_container {
-    background-color: blueviolet;
-}
+footer {
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+    background-color: #212529;
+    padding: 10px 0;
+  }
+
+  footer .footer-link {
+    margin: 0 10px;
+  }
+
+  footer .footer-link i {
+    font-size: 30px;
+  }
+
+  .footer-link.active {
+    color: rgb(226, 73, 43);
+  }
+
+  .footer-link {
+    color: #E6E6FA;
+    height: 30px;
+    transition: transform 0.3s ease;
+  }
+
+  .footer-link:hover {
+    color: rgb(27, 155, 247) !important;
+    transform: scale(1.2) !important;
+  }
