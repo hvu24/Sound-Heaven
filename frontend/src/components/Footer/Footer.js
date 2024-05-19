@@ -36,18 +36,29 @@ const Footer = () => {
     }
 
     return (
-        <div className="footer">
-            <AudioPlayer
-                autoPlay={false}
-                src={currentSong}
-                customAdditionalControls={[]}
-                onPlay={e => console.log("onPlay")}
-                showSkipControls={true}
-                header={songTitle}
-                onClickPrevious={handleClickPrevious}
-                onClickNext={handleClickNext}
-                onEnded={handleEnd}
-            />
+        <div className='footer-container'>
+            <footer>
+                <a href='https://www.linkedin.com/in/anthony-v-67a490214/' target='_blank' className='footer-link'>
+                    <i class="fa-brands fa-linkedin"></i>
+                </a>
+                <a href='https://github.com/hvu24' target='_blank' className='footer-link'>
+                    <i class="fa-brands fa-github"></i>
+                </a>
+            </footer>
+            <div className="audio-controls">
+                <AudioPlayer
+                    autoPlay={false}
+                    src={currentSong}
+                    customAdditionalControls={[]}
+                    onPlay={e => console.log("onPlay")}
+                    showSkipControls={true}
+                    header={songTitle}
+                    onClickPrevious={handleClickPrevious}
+                    onClickNext={handleClickNext}
+                    onEnded={handleEnd}
+                />
+
+            </div>
         </div>
     );
 };
