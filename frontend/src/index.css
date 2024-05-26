@@ -38,16 +38,3 @@ button {
     height: 20;
 }
 
-:active {
-    /* color: red */
-}
-
-nav {
-    display: flex;
-    justify-content: space-around;
-    height: 20px;
-    width: auto;
-    background-color: #52eca7;
-    border: 2px solid black;
-    border-radius: 10px;
-}
