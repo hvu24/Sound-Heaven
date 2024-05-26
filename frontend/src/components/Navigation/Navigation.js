@@ -7,6 +7,8 @@ import './Navigation.css';
 import Nav from 'react-bootstrap/Nav';
 import Navbar from 'react-bootstrap/Navbar';
 import Container from 'react-bootstrap/Container';
+import { useModal } from '../context/Modal';
+import LoginFormModal from '../LoginFormModal';
 
 function Navigation({ isLoaded }) {
     const sessionUser = useSelector(state => state.session.user);
@@ -14,6 +16,11 @@ function Navigation({ isLoaded }) {
     const isActive = location.pathname === '/';
 
     let sessionLinks;
+
+    const { setModalContent, closeModal } = useModal();
+    const openLoginModal = () => {
+        setModalContent(<LoginFormModal />);
+      };
 
     if (sessionUser?.id) { //if sessionUser exists try to key into id, if not then move on '(sessionUser && sessionUser.id)'
         sessionLinks = (
@@ -33,7 +40,8 @@ function Navigation({ isLoaded }) {
         sessionLinks = (
             <>
                 <Nav className="nav-links">
-                    <Nav.Link><NavLink exact to="/songs" className='link' ><i class="fa-solid fa-music"></i> <span> All Songs</span></NavLink></Nav.Link>
+                    <Nav.Link as="button" onClick={openLoginModal} className='link'><i className="fa-solid fa-right-to-bracket"></i><span> Login</span></Nav.Link>
+                    <Nav.Link><NavLink exact to="/songs" className='link' ><i class="fa-solid fa-music"></i> <span> Explore Songs</span></NavLink></Nav.Link>
                     <Nav.Link><NavLink exact to="/login" className='link' ><i class="fa-solid fa-right-to-bracket"></i> <span> Login</span></NavLink></Nav.Link>
                     <Nav.Link><NavLink exact to="/signup" className='link' ><i class="fa-solid fa-user-plus"></i> <span> Sign Up</span></NavLink></Nav.Link>
                 </Nav>
