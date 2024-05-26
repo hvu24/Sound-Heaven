@@ -9,6 +9,7 @@ import { restoreCSRF, csrfFetch } from './store/csrf';
 import * as sessionActions from './store/session';
 import Favicon from 'react-favicon'
 import { MusicPlayerProvider } from './components/MusicPlayerContext/MusicPlayerContext';
+import { Modal, ModalProvider } from './components/context/Modal';
 
 const store = configureStore();
 
@@ -22,13 +23,16 @@ if (process.env.NODE_ENV !== 'production') {
 
 function Root() {
   return (
-    <Provider store={store}>
-      <BrowserRouter>
-        <MusicPlayerProvider>
-          <App />
-        </MusicPlayerProvider>
-      </BrowserRouter>
-    </Provider>
+    <ModalProvider>
+      <Provider store={store}>
+        <BrowserRouter>
+          <MusicPlayerProvider>
+            <App />
+            <Modal />
+          </MusicPlayerProvider>
+        </BrowserRouter>
+      </Provider>
+    </ModalProvider>
   );
 }
 

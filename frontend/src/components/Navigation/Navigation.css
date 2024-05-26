@@ -6,3 +6,9 @@
     border: 2px solid rgb(19, 16, 16);
 }
 
+.nav-links {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+}
+
