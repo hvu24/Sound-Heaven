@@ -19,7 +19,11 @@ function LoginFormPage() {
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrors([]);
-        return dispatch(sessionActions.login({ credential, password }))
+        const fakeUser = {
+            credential: credential,
+            password: password
+        }
+        return dispatch(sessionActions.login(fakeUser))
             .catch(async (res) => {
                 const data = await res.json();
                 if (data && data.errors) setErrors(data.errors);

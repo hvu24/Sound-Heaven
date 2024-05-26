@@ -35,11 +35,11 @@
     padding: 10px 20px;
     border-radius: 5px;
     border: none;
-    background-color: rgb(226, 73, 43);
+    background-color: #7e4fcf;
     color: #fff;
     font-size: 16px;
     cursor: pointer;
-    
+
 }
 
 .modal-container button:hover {
