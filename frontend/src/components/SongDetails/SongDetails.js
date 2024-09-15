@@ -1,5 +1,4 @@
 import './SongDetails.css'
-
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { useParams } from 'react-router-dom';
@@ -19,14 +18,11 @@ function SongDetails() {
     const [description, setDescription] = useState('');
     const [url, setUrl] = useState('');
     const [imageUrl, setImageUrl] = useState('');
-    // const [albumId, setAlbumId] = useState(0);
     const sessionUser = useSelector((state) => state.session.user);
     const [body, setBody] = useState('')
     const [errors, setErrors] = useState([]);
-
     const songDetail = useSelector(state => state.songDetailsReducer[songId])
     const [artist, setArtist] = useState({})
-    console.log(imageUrl)
 
     useEffect(() => {
         if (!song) {
@@ -51,14 +47,13 @@ function SongDetails() {
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrors([]);
-
-        const userName = sessionUser.username
-        const userId = sessionUser.id
+        const userName = sessionUser.username;
+        const userId = sessionUser.id;
 
         dispatch(createComment({ body, songId, userName, userId }))
             .then(() => {
-                window.alert(`Comment successfully created!`)
-                setBody('')
+                window.alert(`Comment successfully created!`);
+                setBody('');
             })
             .catch(async (res) => {
                 const data = await res.json();
@@ -67,37 +62,38 @@ function SongDetails() {
     };
 
     return (
-        <div className='showcase-wrapper'>
-            {/* <div>Song Id: {songId}</div>
-            <div>Artist Id: {artistId}</div> */}
-            <div>Artist Name: {artist.username}</div>
-            <div>Title: {title}</div>
-            <div>Description: {description}</div>
-            {/* <div>Url: {url}</div>
-            <div>Image Url: {imageUrl}</div> */}
-            <img className='preview-img' src={imageUrl} />
-            {/* <div>{albumId}</div> */}
-            {(sessionUser.id && artistId === sessionUser.id) && <NavLink to={`/songs/${song.id}/delete`}>Delete Song</NavLink>}
-            {(sessionUser.id && artistId === sessionUser.id) && <NavLink to={`/songs/${song.id}/edit`}>Edit Song</NavLink>}
-            <ul>
-                {errors.map((error, idx) => <li key={idx}>{error}</li>)}
-            </ul>
-            {sessionUser.id &&
-                <textarea
-                    rows={5}
-                    cols={65}
-                    value={body}
-                    onChange={(e) => setBody(e.target.value)}
-                />
-            }
-            {sessionUser.id &&
-                <button className='create-comment-button' onClick={handleSubmit}>Create Comment</button>
-            }
-            <CommentList songId={songId} />
+        <div className='details-container'>
+            <div className='details-header'>
+                <img className='preview-img' src={imageUrl} alt={title} />
+                <div className='details-info'>
+                    <h2>{title}</h2>
+                    <p><strong>Artist:</strong> {artist.username}</p>
+                    <p><strong>Description:</strong> {description}</p>
+                </div>
+            </div>
+
+            <div className='comment-section'>
+                <h3>Comments</h3>
+                {sessionUser?.id && (
+                    <form onSubmit={handleSubmit} className="comment-form">
+                        <ul className="errors-list">
+                            {errors.map((error, idx) => <li key={idx}>{error}</li>)}
+                        </ul>
+                        <textarea
+                            rows={5}
+                            cols={65}
+                            value={body}
+                            onChange={(e) => setBody(e.target.value)}
+                            placeholder="Write a comment..."
+                        />
+                        <button className='create-comment-button' type="submit">Create Comment</button>
+                    </form>
+                )}
+                <CommentList songId={songId} />
+            </div>
         </div>
-
     );
-
 }
 
 export default SongDetails;
+

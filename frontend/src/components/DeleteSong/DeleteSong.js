@@ -1,29 +1,20 @@
 import './DeleteSong.css'
-
-import React, { useState, useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { Redirect, useHistory } from "react-router-dom";
-import { removeSong } from '../../store/userSongsReducer';
-import { useParams } from 'react-router-dom';
-import { loadAllUserSongs } from '../../store/userSongsReducer';
-import { songDetails } from '../../store/songDetailsReducer';
-// import { loadAllSongs } from '../../store/songsReducer';
-import { deleteSongFromAll } from '../../store/songsReducer';
+import React, { useState, useEffect } from "react"
+import { useDispatch, useSelector } from "react-redux"
+import { Redirect, useHistory, useParams } from "react-router-dom"
+import { removeSong, loadAllUserSongs } from '../../store/userSongsReducer'
+import { songDetails } from '../../store/songDetailsReducer'
+import { deleteSongFromAll } from '../../store/songsReducer'
 
 function DeleteSong() {
-    const dispatch = useDispatch();
+    const dispatch = useDispatch()
     const history = useHistory()
-    const { songId } = useParams();
+    const { songId } = useParams()
     const songsObj = useSelector(state => state.userSongReducer)
     const song = songsObj[songId]
-    const [title, setTitle] = useState('');
-    const [description, setDescription] = useState('');
-    // const [url, setUrl] = useState('');
-    // const [imageUrl, setImageUrl] = useState('');
-    // const [artistId, setArtistId] = useState('');
-
-    const sessionUser = useSelector((state) => state.session.user);
-
+    const [title, setTitle] = useState('')
+    const [description, setDescription] = useState('')
+    const sessionUser = useSelector((state) => state.session.user)
     const songDetail = useSelector(state => state.songDetailsReducer[songId])
     const [artist, setArtist] = useState({})
 
@@ -33,9 +24,6 @@ function DeleteSong() {
         } else {
             setTitle(song.title)
             setDescription(song.description)
-            // setUrl(song.url)
-            // setImageUrl(song.imageUrl)
-            // setArtistId(song.artistId)
         }
     }, [dispatch, song])
 
@@ -47,37 +35,35 @@ function DeleteSong() {
         }
     }, [dispatch, songId, songDetail])
 
-
-
     if (!sessionUser.id) {
         return <Redirect to="/login" />
-    } else {
-
-        const handleSubmit = (e) => {
-            e.preventDefault();
-
-            dispatch(removeSong(songId))
-                .then(() => {
-                    dispatch(deleteSongFromAll(songId))
-                    window.alert(`Song with the title of ${songDetail.title} successfully deleted!`)
-                    history.push(`/songs/current`)
-                })
-
-        };
-
-        return (
-            <>
-                {/* <div>Song Id: {songId}</div>
-                <div>Artist Id: {artistId}</div> */}
-                <div>Artist Name: {artist.username}</div>
-                <div>Title: {title}</div>
-                <div>Description: {description}</div>
-                {/* <div>Url: {url}</div>
-                <div>Image Url:{imageUrl}</div> */}
-                <button onClick={handleSubmit}>Delete Song</button>
-            </>
-        );
     }
+
+    const handleSubmit = (e) => {
+        e.preventDefault()
+        dispatch(removeSong(songId))
+            .then(() => {
+                dispatch(deleteSongFromAll(songId))
+                window.alert(`Song with the title of ${songDetail.title} successfully deleted!`)
+                history.push(`/songs/current`)
+            })
+    }
+
+    return (
+        <div className="delete-song-wrapper">
+            <div className="delete-song-container">
+                <h1>Delete Song</h1>
+                <div className="delete-song-details">
+                    <p><strong>Artist Name:</strong> {artist.username}</p>
+                    <p><strong>Title:</strong> {title}</p>
+                    <p><strong>Description:</strong> {description}</p>
+                </div>
+                <div className="submit-btn-container">
+                    <button className="submit-btn" onClick={handleSubmit}>Delete Song</button>
+                </div>
+            </div>
+        </div>
+    )
 }
 
-export default DeleteSong;
+export default DeleteSong

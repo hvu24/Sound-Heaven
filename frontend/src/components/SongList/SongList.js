@@ -25,25 +25,13 @@ const SongList = () => {
     }, [songsArr, myplaylist, setPlaylist]);
 
     return (
-        // <div>
-        //     <h1>All Songs</h1>
-        //     <ul className='all-songs'>
-        //         <div>
-        //             {songsArr.map((song) => {
-        //                 return (
-        //                     <SongCard key={song.id} song={song} songId={song.id}></SongCard>
-        //                 )
-        //             })}
-        //         </div>
-        //     </ul>
-        // </div>
         <div>
             <h1>All Songs</h1>
-            <Container>
-                <Row className="my-grid">
+            <Container className='all-songs'>
+                <Row className="all-grid">
                     {songsArr.map((song, index) => {
                         return (
-                            <SongCard className='col' key={song.id} song={song} songId={song.id} index={index}></SongCard>
+                            <SongCard className='col' key={song.id} song={song} songId={song.id} index={index} showButtons={false}></SongCard>
                         )
                     })}
                 </Row>

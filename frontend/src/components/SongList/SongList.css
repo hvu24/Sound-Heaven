@@ -2,18 +2,13 @@
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    margin-bottom: 200px;
+    margin-top: 50px;
 }
 
-.my-grid {
+.all-grid {
     display: flex;
     flex-wrap: wrap;
     justify-content: space-around;
     margin: -15px;
   }
-
-  /* .my-grid > .col {
-    padding: 15px;
-    flex-basis: calc(33.33% - 30px);
-    max-width: calc(33.33% - 30px);
-    box-sizing: border-box;
-  } */

@@ -1,4 +1,3 @@
-// frontend/src/components/Navigation/index.js
 import React from 'react';
 import { NavLink, useLocation } from 'react-router-dom';
 import { useSelector } from 'react-redux';
@@ -22,7 +21,7 @@ function Navigation({ isLoaded }) {
         setModalContent(<LoginFormModal />);
       };
 
-    if (sessionUser?.id) { //if sessionUser exists try to key into id, if not then move on '(sessionUser && sessionUser.id)'
+    if (sessionUser?.id) {
         sessionLinks = (
             <>
                 <Nav className="nav-links">

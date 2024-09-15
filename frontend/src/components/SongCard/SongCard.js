@@ -1,26 +1,27 @@
 import './SongCard.css'
-import { useSelector, useDispatch } from "react-redux";
-import { NavLink } from 'react-router-dom';
-import React, { useState, useEffect } from "react";
-import { songDetails } from '../../store/songDetailsReducer';
+import { useSelector, useDispatch } from "react-redux"
+import { NavLink } from 'react-router-dom'
+import React, { useEffect } from "react"
+import { songDetails } from '../../store/songDetailsReducer'
 import Card from 'react-bootstrap/Card'
 import Button from 'react-bootstrap/Button'
-import { Container, Row, Col, ButtonGroup, Dropdown } from 'react-bootstrap';
-import PlayButtonImage from './PlayButtonImage';
-import { addSongToPlaylist } from '../../store/userPlaylistsReducer';
-import { loadAllUserPlaylists } from '../../store/userPlaylistsReducer';
+import { ButtonGroup, Dropdown } from 'react-bootstrap'
+import PlayButtonImage from './PlayButtonImage'
+import { addSongToPlaylist } from '../../store/userPlaylistsReducer'
+import { loadAllUserPlaylists } from '../../store/userPlaylistsReducer'
 
-
-const SongCard = ({ song, songId, index }) => {
-    const sessionUser = useSelector((state) => state.session.user);
-    const dispatch = useDispatch();
+const SongCard = ({ song, songId, index, isHomePage = false, isMySongsPage = false }) => {
+    const sessionUser = useSelector((state) => state.session.user)
+    const dispatch = useDispatch()
     const songDetail = useSelector(state => state.songDetailsReducer[songId])
     const playlistsObj = useSelector(state => state.userPlaylistReducer)
     const playlistsArr = Object.values(playlistsObj)
 
     useEffect(() => {
-        dispatch(loadAllUserPlaylists())
-    }, [dispatch])
+        if (!playlistsObj) {
+            dispatch(loadAllUserPlaylists())
+        }
+    }, [dispatch, playlistsObj])
 
     useEffect(() => {
         if (!songDetail) {
@@ -28,13 +29,8 @@ const SongCard = ({ song, songId, index }) => {
         }
     }, [dispatch, songId, songDetail])
 
-    const data = {
-        songId,
-        playlistId: 1
-    }
-
     const addToPlaylist = (playlistId) => {
-        data.playlistId = playlistId
+        const data = { songId, playlistId }
         dispatch(addSongToPlaylist(data))
     }
 
@@ -45,25 +41,37 @@ const SongCard = ({ song, songId, index }) => {
                 <Card.Title>{song.title}</Card.Title>
                 <Card.Text>{song.description}</Card.Text>
             </Card.Body>
-            {(sessionUser.id) && <Dropdown as={ButtonGroup}>
-                <Button variant="success">Add Song to Playlist</Button>
-                <Dropdown.Toggle split variant="success" id="dropdown-split-basic" />
-                <Dropdown.Menu>
-                    {playlistsArr.map((playlist) => {
-                        return (
-                            <Dropdown.Item onClick={() => addToPlaylist(playlist.id)}>{playlist.name}</Dropdown.Item>
-                        )
-                    })}
-                </Dropdown.Menu>
-            </Dropdown>}
-            <ButtonGroup className="d-flex justify-content-center">
-                {(sessionUser.id && song.artistId === sessionUser.id) && <NavLink to={`/songs/${song.id}/delete`}>
-                    <Button variant="danger" style={{}}>Delete Song</Button></NavLink>}
-                {(sessionUser.id && song.artistId === sessionUser.id) && <NavLink to={`/songs/${song.id}/edit`}>
-                    <Button variant="warning">Edit Song</Button></NavLink>}
+
+            {!isHomePage && sessionUser?.id && (
+                <Dropdown as={ButtonGroup}>
+                    <Button variant="success">Add Song to Playlist</Button>
+                    <Dropdown.Toggle split variant="success" id="dropdown-split-basic" />
+                    <Dropdown.Menu>
+                        {playlistsArr.map((playlist) => (
+                            <Dropdown.Item key={playlist.id} onClick={() => addToPlaylist(playlist.id)}>
+                                {playlist.name}
+                            </Dropdown.Item>
+                        ))}
+                    </Dropdown.Menu>
+                </Dropdown>
+            )}
+
+            <div className="d-flex justify-content-center my-3">
                 <NavLink to={`/songs/${song.id}/details`}>
-                    <Button variant="primary">Details</Button></NavLink>
-            </ButtonGroup>
+                    <Button variant="primary">Details</Button>
+                </NavLink>
+            </div>
+
+            {isMySongsPage && sessionUser?.id === song.artistId && (
+                <ButtonGroup className="d-flex justify-content-center">
+                    <NavLink to={`/songs/${song.id}/edit`}>
+                        <Button variant="warning">Edit Song</Button>
+                    </NavLink>
+                    <NavLink to={`/songs/${song.id}/delete`}>
+                        <Button variant="danger">Delete Song</Button>
+                    </NavLink>
+                </ButtonGroup>
+            )}
         </Card>
     )
 }

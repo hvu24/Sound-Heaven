@@ -1,5 +1,14 @@
-.user-songs {
+.my-songs {
     display: flex;
     flex-wrap: wrap;
     justify-content: center;
+    margin-bottom: 200px;
+    margin-top: 50px;
 }
+
+.my-grid {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+    margin: -15px;
+  }

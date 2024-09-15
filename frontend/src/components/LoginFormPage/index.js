@@ -1,4 +1,3 @@
-// frontend/src/components/LoginFormPage/index.js
 import React, { useState } from 'react';
 import * as sessionActions from '../../store/session';
 import { useDispatch, useSelector } from 'react-redux';
@@ -12,37 +11,29 @@ function LoginFormPage() {
     const [password, setPassword] = useState('');
     const [errors, setErrors] = useState([]);
 
-    if (sessionUser.id) return (
-        <Redirect to="/" />
-    );
+    if (sessionUser.id) return <Redirect to="/" />;
 
     const handleSubmit = (e) => {
         e.preventDefault();
         setErrors([]);
-        const fakeUser = {
-            credential: credential,
-            password: password
-        }
-        return dispatch(sessionActions.login(fakeUser))
-            .catch(async (res) => {
-                const data = await res.json();
-                if (data && data.errors) setErrors(data.errors);
-            });
-    }
+        const fakeUser = { credential, password };
+        return dispatch(sessionActions.login(fakeUser)).catch(async (res) => {
+            const data = await res.json();
+            if (data && data.errors) setErrors(data.errors);
+        });
+    };
 
     const handleDemoLogin = (e) => {
         e.preventDefault();
-        const fakeUser = {
-            credential: 'Illenium',
-            password: 'password2'
-        }
-        return dispatch(sessionActions.login(fakeUser))
-    }
+        const fakeUser = { credential: 'Illenium', password: 'password2' };
+        return dispatch(sessionActions.login(fakeUser));
+    };
 
     return (
-        <>
-            <form onSubmit={handleSubmit}>
-                <ul>
+        <div className="login-container">
+            <form onSubmit={handleSubmit} className="login-form">
+                <h2 className="login-title">Log In</h2>
+                <ul className="errors-list">
                     {errors.map((error, idx) => <li key={idx}>{error}</li>)}
                 </ul>
                 <input
@@ -50,19 +41,23 @@ function LoginFormPage() {
                     placeholder="Username or Email"
                     value={credential}
                     onChange={(e) => setCredential(e.target.value)}
+                    className="login-input"
                 />
                 <input
                     type="password"
                     placeholder="Password"
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
+                    className="login-input"
                 />
-                <button type="submit">Log In</button>
+                <button type="submit" className="login-button">Log In</button>
+                <div className="demo-container">
+                    <form onSubmit={handleDemoLogin}>
+                        <button type="submit" className="demo-button">Demo User Log In</button>
+                    </form>
+                </div>
             </form>
-            <form onSubmit={handleDemoLogin}>
-                <button type="submit">Demo User Log In</button>
-            </form>
-        </>
+        </div>
     );
 }
 
