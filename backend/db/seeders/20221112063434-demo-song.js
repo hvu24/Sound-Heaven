@@ -15,7 +15,7 @@ module.exports = {
         title: 'Feel Good (feat. Daya)',
         description: 'Performed by: Daya, Gryffin, ILLENIUM',
         url: "https://myawsbucket-ahv.s3.us-west-1.amazonaws.com/Gryffin%2C+Illenium+-+Feel+Good+ft.+Daya.mp3",
-        imageUrl: 'https://i.ytimg.com/vi/sZLLB6JNKpU/maxresdefault.jpg',
+        imageUrl: 'https://i1.sndcdn.com/artworks-000240799553-xjzyfh-t500x500.jpg',
       },
       {
         artistId: 1,
@@ -47,7 +47,7 @@ module.exports = {
         title: 'Faded',
         description: 'Performed by: Alan Walker',
         url: "https://myawsbucket-ahv.s3.us-west-1.amazonaws.com/Alan+Walker+-+Faded.mp3",
-        imageUrl: 'https://jesusful.com/wp-content/uploads/2022/07/Alan-Walker-Faded-Mp3-Download-Lyrics.jpg',
+        imageUrl: 'https://m.media-amazon.com/images/I/41F9BqzWAQL._UXNaN_FMjpg_QL85_.jpg',
       },
       {
         artistId: 2,
@@ -71,7 +71,7 @@ module.exports = {
         title: 'On My Way',
         description: 'Performed by: Alan Walker, Farruko, Sabrina Carpenter',
         url: "https://myawsbucket-ahv.s3.us-west-1.amazonaws.com/Alan+Walker%2C+Sabrina+Carpenter+%26+Farruko++-+On+My+Way.mp3",
-        imageUrl: 'https://i.ytimg.com/vi/p0QmF9VDiVg/maxresdefault.jpg',
+        imageUrl: 'https://i1.sndcdn.com/artworks-000523641915-lo2qzf-t500x500.jpg',
       },
     ], {});
   },
