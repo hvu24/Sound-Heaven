@@ -193,4 +193,68 @@ router.post('/:playlistId/songs', requireAuth, async (req, res, next) => {
         return next(err)
     }
 });
+
+// delete song from playlist by playlist id
+router.delete('/:playlistId/songs/:songId', requireAuth, async (req, res, next) => {
+    const { playlistId, songId } = req.params;
+    const { user } = req;
+
+    const playlist = await Playlist.findOne({
+        where: {
+            id: playlistId
+        }
+    });
+
+    const song = await Song.findOne({
+        where: {
+            id: songId
+        }
+    });
+
+    if (!playlist) {
+        const err = new Error("Playlist couldn't be found.");
+        err.status = 404;
+        err.title = "Playlist couldn't be found.";
+        err.errors = ["Playlist couldn't be found."];
+        return next(err);
+    }
+
+    if (!song) {
+        const err = new Error("Song couldn't be found.");
+        err.status = 404;
+        err.title = "Song couldn't be found.";
+        err.errors = ["Song couldn't be found."];
+        return next(err);
+    }
+
+    // Check if the playlist belongs to the current user
+    if (playlist.userId !== user.id) {
+        const err = new Error('User not authorized to modify playlist.');
+        err.status = 403;
+        err.title = 'User not authorized to modify playlist.';
+        err.errors = ['User not authorized to modify playlist.'];
+        return next(err);
+    }
+
+    // Delete the song from the playlist (remove from SongPlaylist join table)
+    const songInPlaylist = await SongPlaylist.findOne({
+        where: {
+            playlistId: playlist.id,
+            songId: song.id
+        }
+    });
+
+    if (!songInPlaylist) {
+        const err = new Error("Song is not in the playlist.");
+        err.status = 404;
+        err.title = "Song is not in the playlist.";
+        err.errors = ["Song is not in the playlist."];
+        return next(err);
+    }
+
+    await songInPlaylist.destroy();
+
+    return res.json({ message: 'Successfully removed song from playlist' });
+});
+
 module.exports = router;
