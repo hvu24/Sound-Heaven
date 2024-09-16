@@ -7,7 +7,6 @@ import { Button } from 'react-bootstrap'
 import { Container, Row, Col } from 'react-bootstrap'
 import { useMusicPlayer } from '../MusicPlayerContext/MusicPlayerContext'
 import Carousel from 'react-bootstrap/Carousel'
-// import ExampleCarouselImage from 'components/ExampleCarouselImage'
 
 
 const HomePage = () => {
@@ -28,27 +27,21 @@ const HomePage = () => {
 
     return (
         <div>
+            <div className="banner-container">
+                <img src="https://www.freewebheaders.com/wp-content/gallery/acting-show/rave-music-concert-and-laser-show-website-header.jpg" alt="Banner Image" className="banner-image" />
+            </div>
             <Container>
-
-                    <Carousel>
-                        {songsArr.map((song, index) => {
-                            return (
-                                <Carousel.Item key={song.id}>
-                                    <div className="carousel-item-center">
-                                        <SongCard className='col' song={song} songId={song.id} index={index}></SongCard>
-                                    </div>
-                                </Carousel.Item>
-                            )
-                        })}
-                    </Carousel>
-                
-                {/* <Row className="my-grid">
+                <Carousel className="fixed-carousel">
                     {songsArr.map((song, index) => {
                         return (
-                            <SongCard className='col' key={song.id} song={song} songId={song.id} index={index}></SongCard>
+                            <Carousel.Item key={song.id}>
+                                <div className="carousel-item-center">
+                                    <SongCard className='col' song={song} songId={song.id} index={index} isHomePage={true}></SongCard>
+                                </div>
+                            </Carousel.Item>
                         )
                     })}
-                </Row> */}
+                </Carousel>
             </Container>
         </div>
     )

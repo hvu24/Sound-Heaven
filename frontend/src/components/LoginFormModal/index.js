@@ -12,28 +12,28 @@ function LoginFormModal() {
   const [credential, setCredential] = useState('');
 
   const handleSubmit = (e) => {
-    e.preventDefault()
-    setErrors([])
+    e.preventDefault();
+    setErrors([]);
     const fakeUser = {
         credential: credential,
         password: password
     }
     return dispatch(sessionActions.login(fakeUser))
       .then((data) => {
-        if (!data.errors) closeModal()
+        if (!data.errors) closeModal();
       })
       .catch(async (res) => {
-        const data = await res.json()
+        const data = await res.json();
         if (data && data.errors) {
-          setErrors(data.errors)
+          setErrors(data.errors);
         }
-      })
+      });
   };
 
   const handeClick = () => {
-    setCredential('Illenium')
-    setPassword('password2')
-  }
+    setCredential('Illenium');
+    setPassword('password2');
+  };
 
   return (
     <div className="modal-container">
@@ -64,10 +64,13 @@ function LoginFormModal() {
         </label>
         <button type="submit">Log In</button>
       </form>
-      <label>Try it out! Click Demo Login to populate fields.<button onClick={handeClick}>Demo Login</button></label>
 
+
+      <div className="demo-button-container">
+        <button onClick={handeClick}>Demo Login</button>
+      </div>
     </div>
-  )
+  );
 }
 
 export default LoginFormModal;

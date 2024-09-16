@@ -1,18 +1,7 @@
-/* TODO Add site wide styles */
-/* :root {
-    background: linear-gradient(90deg,
-            rgb(234, 155, 44) 0%,
-            rgb(205, 50, 248) 100%);
-    background-repeat: no-repeat;
-    background-size: cover;
-    width: 100vw;
-    min-height: 100vh;
-} */
-
 body {
     background: linear-gradient(90deg,
-            rgb(234, 155, 44) 0%,
-            rgb(205, 50, 248) 100%);
+            rgb(44, 234, 50) 0%,
+            rgb(248, 50, 50) 100%);
 }
 
 form {
@@ -37,4 +26,3 @@ button {
     width: 120px;
     height: 20;
 }
-

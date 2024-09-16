@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { loadAllSongs } from '../../store/songsReducer'
 import SongCard from '../SongCard/SongCard'
 import { Button } from 'react-bootstrap'
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap'
 import { useMusicPlayer } from '../MusicPlayerContext/MusicPlayerContext'
+import { loadAllUserPlaylists } from '../../store/userPlaylistsReducer'
 
 
 const SongList = () => {
@@ -16,34 +17,23 @@ const SongList = () => {
 
     useEffect(() => {
         dispatch(loadAllSongs())
+        dispatch(loadAllUserPlaylists())
     }, [dispatch])
 
     useEffect(() => {
         if (JSON.stringify(myplaylist) !== JSON.stringify(songsArr)) {
-            setPlaylist(songsArr);
+            setPlaylist(songsArr)
         }
-    }, [songsArr, myplaylist, setPlaylist]);
+    }, [songsArr, myplaylist, setPlaylist])
 
     return (
-        // <div>
-        //     <h1>All Songs</h1>
-        //     <ul className='all-songs'>
-        //         <div>
-        //             {songsArr.map((song) => {
-        //                 return (
-        //                     <SongCard key={song.id} song={song} songId={song.id}></SongCard>
-        //                 )
-        //             })}
-        //         </div>
-        //     </ul>
-        // </div>
         <div>
             <h1>All Songs</h1>
-            <Container>
-                <Row className="my-grid">
+            <Container className='all-songs'>
+                <Row className="all-grid">
                     {songsArr.map((song, index) => {
                         return (
-                            <SongCard className='col' key={song.id} song={song} songId={song.id} index={index}></SongCard>
+                            <SongCard className='col' key={song.id} song={song} songId={song.id} index={index} showButtons={false}></SongCard>
                         )
                     })}
                 </Row>

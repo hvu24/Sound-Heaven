@@ -1,11 +1,12 @@
-// frontend/src/components/Navigation/ProfileButton.js
 import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
+import { useModal } from '../context/Modal';
 
 function ProfileButton({ user }) {
     const dispatch = useDispatch();
     const [showMenu, setShowMenu] = useState(false);
+    const { openModal } = useModal();
 
     const openMenu = () => {
         if (showMenu) return;
@@ -26,7 +27,9 @@ function ProfileButton({ user }) {
 
     const logout = (e) => {
         e.preventDefault();
-        dispatch(sessionActions.logout());
+        dispatch(sessionActions.logout()).then(() => {
+            openModal('login');
+        });
     };
 
     return (
