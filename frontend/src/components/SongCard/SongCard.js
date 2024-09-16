@@ -8,7 +8,7 @@ import Button from 'react-bootstrap/Button'
 import { ButtonGroup, Dropdown } from 'react-bootstrap'
 import PlayButtonImage from './PlayButtonImage'
 import { addSongToPlaylist } from '../../store/userPlaylistsReducer'
-import { loadAllUserPlaylists } from '../../store/userPlaylistsReducer'
+import { loadAllUserPlaylists, playlistDetails } from '../../store/userPlaylistsReducer'
 
 const SongCard = ({ song, songId, index, isHomePage = false, isMySongsPage = false }) => {
     const sessionUser = useSelector((state) => state.session.user)
@@ -32,6 +32,7 @@ const SongCard = ({ song, songId, index, isHomePage = false, isMySongsPage = fal
     const addToPlaylist = (playlistId) => {
         const data = { songId, playlistId }
         dispatch(addSongToPlaylist(data))
+        dispatch(playlistDetails(playlistId));
     }
 
     return (

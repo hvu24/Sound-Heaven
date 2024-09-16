@@ -4,8 +4,9 @@ import { useDispatch, useSelector } from 'react-redux'
 import { loadAllSongs } from '../../store/songsReducer'
 import SongCard from '../SongCard/SongCard'
 import { Button } from 'react-bootstrap'
-import { Container, Row, Col } from 'react-bootstrap';
+import { Container, Row, Col } from 'react-bootstrap'
 import { useMusicPlayer } from '../MusicPlayerContext/MusicPlayerContext'
+import { loadAllUserPlaylists } from '../../store/userPlaylistsReducer'
 
 
 const SongList = () => {
@@ -16,13 +17,14 @@ const SongList = () => {
 
     useEffect(() => {
         dispatch(loadAllSongs())
+        dispatch(loadAllUserPlaylists())
     }, [dispatch])
 
     useEffect(() => {
         if (JSON.stringify(myplaylist) !== JSON.stringify(songsArr)) {
-            setPlaylist(songsArr);
+            setPlaylist(songsArr)
         }
-    }, [songsArr, myplaylist, setPlaylist]);
+    }, [songsArr, myplaylist, setPlaylist])
 
     return (
         <div>
