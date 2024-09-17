@@ -28,8 +28,22 @@ h1 {
 
 .user-playlists-grid {
     display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
     gap: 20px;
-    width: 100%;
-    box-sizing: border-box;
+    margin-top: 20px;
+}
+
+.create-playlist-button {
+    background-color: #007bff;
+    color: white;
+    border: none;
+    padding: 10px 15px;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    margin-bottom: 20px;
+}
+
+.create-playlist-button:hover {
+    background-color: #0056b3;
 }

@@ -1,5 +1,43 @@
 import { csrfFetch } from './csrf'
 
+export const deletePlaylist = (playlistId) => async (dispatch) => {
+    const response = await csrfFetch(`/api/playlists/${playlistId}`, {
+        method: 'DELETE',
+    });
+
+    if (response.ok) {
+        dispatch(removePlaylist(playlistId));
+    }
+};
+
+
+export const removePlaylist = (playlistId) => {
+    return {
+        type: 'REMOVE_PLAYLIST',
+        playlistId,
+    };
+};
+
+export const updatePlaylist = (data) => async (dispatch) => {
+    const { playlistId, name, imageUrl } = data;
+
+    const response = await csrfFetch(`/api/playlists/${playlistId}`, {
+        method: 'PUT',
+        headers: {
+            'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ name, imageUrl }),
+    });
+
+    if (response.ok) {
+        const updatedPlaylist = await response.json();
+        dispatch({
+            type: 'UPDATE_PLAYLIST',
+            playlist: updatedPlaylist,
+        });
+    }
+};
+
 export const playlistDetails = (playlistId) => async (dispatch) => {
     const response = await csrfFetch(`/api/playlists/${playlistId}`)
 
@@ -8,6 +46,24 @@ export const playlistDetails = (playlistId) => async (dispatch) => {
         dispatch(loadPlaylistDetails(playlist))
     }
 }
+
+export const addPlaylist = (playlist) => ({
+    type: 'ADD_PLAYLIST',
+    playlist
+});
+
+export const createPlaylist = (playlistData) => async (dispatch) => {
+    const { name, imageUrl } = playlistData;
+    const response = await csrfFetch('/api/playlists', {
+        method: 'POST',
+        body: JSON.stringify({ name, imageUrl }),
+    });
+
+    if (response.ok) {
+        const newPlaylist = await response.json();
+        dispatch(addPlaylist(newPlaylist));
+    }
+};
 
 export const loadPlaylistDetails = (playlist) => {
     return {
@@ -112,10 +168,21 @@ const userPlaylistReducer = (state = initialState, action) => {
             newState[action.playlistId] = updatedPlaylist
             return newState
 
+        case 'UPDATE_PLAYLIST':
+            newState[action.playlist.id] = action.playlist;
+            return newState;
+
+        case 'ADD_PLAYLIST':
+            return { ...state, [action.playlist.id]: action.playlist };
+
+        case 'REMOVE_PLAYLIST':
+            newState = { ...state };
+            delete newState[action.playlistId];
+            return newState;
+
         default:
             return state
     }
 }
 
 export default userPlaylistReducer
-

@@ -12,22 +12,22 @@ module.exports = {
       {
         userId: 1,
         name: 'User1Playlist1',
-        imageUrl: 'www.someplace.com'
+        imageUrl: 'https://www.ikmultimedia.com/products/stedm/main-banner/mobile.jpg'
       },
       {
         userId: 1,
         name: 'User1Playlist2',
-        imageUrl: 'www.someplaceelse.com'
+        imageUrl: 'https://static.vecteezy.com/system/resources/thumbnails/023/137/505/small/robot-disc-jockey-at-the-dj-mixer-and-turntable-plays-nightclub-during-party-edm-entertainment-party-concept-neural-network-generated-art-photo.jpg'
       },
       {
         userId: 2,
         name: 'User2Playlist1',
-        imageUrl: 'www.place.com'
+        imageUrl: 'https://www.ikmultimedia.com/products/stedm/main-banner/mobile.jpg'
       },
       {
         userId: 2,
         name: 'User2Playlist2',
-        imageUrl: 'www.placeelse.com'
+        imageUrl: 'https://static.vecteezy.com/system/resources/thumbnails/023/137/505/small/robot-disc-jockey-at-the-dj-mixer-and-turntable-plays-nightclub-during-party-edm-entertainment-party-concept-neural-network-generated-art-photo.jpg'
       },
 
     ], {});
