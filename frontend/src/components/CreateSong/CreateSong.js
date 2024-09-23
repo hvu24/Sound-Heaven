@@ -16,7 +16,7 @@ function CreateSong() {
     const [image, setImage] = useState(null)
 
     if (!sessionUser.id) {
-        return <Redirect to="/login" />
+        return <Redirect to="/" />
     }
 
     const handleSubmit = (e) => {

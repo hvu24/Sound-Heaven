@@ -9,7 +9,7 @@
 }
 
 .playlist-card img {
-    max-width: 30vw;
+    max-width: 100%;
     height: auto;
     object-fit: cover;
     margin-bottom: 10px;

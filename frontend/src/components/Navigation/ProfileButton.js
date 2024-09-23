@@ -1,3 +1,4 @@
+import './ProfileButton.css'
 import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
 import * as sessionActions from '../../store/session';
@@ -16,8 +17,11 @@ function ProfileButton({ user }) {
     useEffect(() => {
         if (!showMenu) return;
 
-        const closeMenu = () => {
-            setShowMenu(false);
+        const closeMenu = (e) => {
+            // Close the menu if the click is outside of the menu
+            if (!e.target.closest('.profile-dropdown') && !e.target.closest('.profile-button')) {
+                setShowMenu(false);
+            }
         };
 
         document.addEventListener('click', closeMenu);
@@ -33,20 +37,20 @@ function ProfileButton({ user }) {
     };
 
     return (
-        <>
-            <button onClick={openMenu}>
+        <div className="profile-button-wrapper">
+            <button onClick={openMenu} className="profile-button">
                 <i className="fas fa-user-circle" />
             </button>
             {showMenu && (
                 <ul className="profile-dropdown">
-                    <li>{user.username}</li>
-                    <li>{user.email}</li>
-                    <li>
-                        <button onClick={logout}>Log Out</button>
+                    <li className="dropdown-item">{user.username}</li>
+                    <li className="dropdown-item">{user.email}</li>
+                    <li className="dropdown-item">
+                        <button onClick={logout} className="logout-button">Log Out</button>
                     </li>
                 </ul>
             )}
-        </>
+        </div>
     );
 }
 
