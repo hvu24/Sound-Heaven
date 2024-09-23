@@ -2,27 +2,44 @@
 Sound Heaven is my first attempt at creating a working website hosted on the web that allows users to play and host music online.
 
 ### Screenshots
-##### Song Detail
+##### Comments
 ![song_detail]
 ##### User Songs
 ![user_songs]
+##### Playlist
+![playlist]
+##### List of Playlists
+![playlists]
+##### Song Upload
+![upload]
 
-[song_detail]: ./SoundCloud.jpg
-[user_songs]: ./usersongs.png
+
+[song_detail]: ./comments.png
+[user_songs]: ./mysongs.png
+[playlist]: ./playlist.png
+[playlists]: ./playlists.png
+[upload]: ./upload.png
 
 ### Features
 * Songs
   * Show all songs in database
-  * Create new song
+  * Upload new song
   * Edit existing song
   * Delete existing song
   * Show only songs of currently logged in user
-  * Show details of a specific song
 
 * Comments
   * Show all comments for a specific song
   * Create new comment for a song
   * Delete an existing comment
+
+* Playlists
+  * Show a user's personal playlists
+  * Create new playlist
+  * Play songs from playlist
+  * Edit playlist
+  * Delete playlist
+
 
 ### Technologies Used
 * Node.js
