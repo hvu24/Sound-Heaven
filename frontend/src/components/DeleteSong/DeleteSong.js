@@ -36,7 +36,7 @@ function DeleteSong() {
     }, [dispatch, songId, songDetail])
 
     if (!sessionUser.id) {
-        return <Redirect to="/login" />
+        return <Redirect to="/" />
     }
 
     const handleSubmit = (e) => {

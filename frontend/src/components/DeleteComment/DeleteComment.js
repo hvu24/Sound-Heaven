@@ -28,7 +28,7 @@ function DeleteComment() {
     }, [dispatch, comment, songId])
 
     if (!sessionUser.id) {
-        return <Redirect to="/login" />
+        return <Redirect to="/" />
     } else {
 
         const handleSubmit = (e) => {

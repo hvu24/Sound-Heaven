@@ -32,18 +32,18 @@
 }
 
 .modal-container button {
-    margin-top: 20px;
     padding: 10px 20px;
-    border-radius: 5px;
+    background-color: #007bff;
+    color: white;
     border: none;
-    background-color: #7e4fcf;
-    color: #fff;
+    border-radius: 5px;
     font-size: 16px;
     cursor: pointer;
+    transition: background-color 0.3s ease;
 }
 
 .modal-container button:hover {
-    background-color: rgb(27, 247, 115);
+    background-color: #0056b3;
 }
 
 
@@ -56,7 +56,7 @@
 
 .demo-button-container button {
     padding: 10px 20px;
-    background-color: #7e4fcf;
+    background-color: #007bff;
     color: white;
     border: none;
     border-radius: 5px;
@@ -66,5 +66,5 @@
 }
 
 .demo-button-container button:hover {
-    background-color: #5e3bbf; 
+    background-color: #0056b3;
 }

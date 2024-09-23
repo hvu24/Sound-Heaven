@@ -28,7 +28,7 @@ function EditSong() {
     }, [dispatch, song])
 
     if (!sessionUser.id) {
-        return <Redirect to="/login" />
+        return <Redirect to="/" />
     }
 
     const handleSubmit = (e) => {

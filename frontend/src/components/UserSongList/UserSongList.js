@@ -25,7 +25,7 @@ const UserSongList = () => {
     }, [songsArr, myplaylist, setPlaylist])
 
     if (!sessionUser.id) {
-        return <Redirect to="/login" />
+        return <Redirect to="/" />
     } else {
         return (
             <div className="user-song-list-container">
