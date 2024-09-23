@@ -2,15 +2,15 @@
 Sound Heaven is my first attempt at creating a working website hosted on the web that allows users to play and host music online.
 
 ### Screenshots
-##### Song Detail
+##### Comments
 ![song_detail]
 ##### User Songs
 ![user_songs]
-##### Song Detail
+##### Playlist
 ![playlist]
-##### User Songs
+##### List of Playlists
 ![playlists]
-##### Song Detail
+##### Song Upload
 ![upload]
 
 
